@@ -7,9 +7,9 @@ Better Authentication for better Geeks.
 In short, this is an authentication framework.
 Much like [PassportJS](http://www.passportjs.org/).
 
-Concepts:
+Concepts: tl;dr
 
- - Authentication is about providing an **Identity** for a **Credential**.
+ - **Authentication** is about providing an **Identity** for a **Credential**.
  Not checking if some one has logged in or not, where:
 
     - **Credential** can be a login form with **id** and **password**, or **access_token**.
@@ -18,7 +18,7 @@ Concepts:
     For example: the primary key value of an user table.
 
 
- - Authentication only have meaning if we provide an **Authentication Context**.
+ - **Authentication** only have meaning if we provide an **Authentication Context**.
  It is a place that authentication happened for a purpose.
  It contains **Credential** information.
  It can transport information back and forth.
@@ -32,5 +32,8 @@ Concepts:
  - The first step will be coupled with authentication standard (OpenID, OAuth2).
  It also coupled with transport protocol (HTTP, Websocket, Console ...),
  which also mean it depends on the transport framework: **Koa**, **Express** / Http, **Socket.IO** / Websocket, ...
+ It should not couple with the Application/System domain nor the second step.
+ Implementations of the first step can be reuse inform of libraries or frameworks.
 
- - The second step will be coupled with the application domain,
+ - The second step will be coupled with the application domain. It should be implemented by the developer.
+
