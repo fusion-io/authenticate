@@ -12,7 +12,7 @@ Concepts: tl;dr
  - **Authentication** is about providing an **Identity** for a **Credential**.
  Not checking if some one has logged in or not, where:
 
-    - **Credential** is a piece of information that is made/sent from the third party system/user to proof that the Application/System know who they are.
+    - **Credential** is a piece of information that is made/sent from the third party system/user to proof that the Application/System knows who they are.
     It can be a login form with **id** and **password**, or an **access_token**, ...
     **Credential** is private and sensitive information. It needs to be treated with security awareness.
     One of the common example is hashing the user's password when store it in database.
@@ -24,6 +24,8 @@ Concepts: tl;dr
     For example: An user logged in into your website via `Login by Facebook` button,
     Facebook will provide an `access_token` as a **Credential**.
     Your website uses that `access_token` and ask to Facebook again to get the Facebook's *user id*. Such *user id* is an **Identity**.
+
+    - **Authentication** is considered as `success` if the **Identity** is provided. Otherwise, it is **failed**.
 
  - **Authentication** only have meaning in an **Authentication Context**.
  It is a place that authentication happened for a purpose.
