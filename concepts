@@ -1,0 +1,10 @@
+Resource
+Issuer
+Gateway
+
+
+Authorize
+
+
+Issuer ---o--> Gateway -----> Resource
+
