@@ -15,7 +15,7 @@ Concepts: tl;dr
     - **Credential** is a piece of information that is made/sent from the third party system/user to proof that the Application/System know who they are.
     It can be a login form with **id** and **password**, or an **access_token**, ...
 
-    - **Identity** is a piece of information that Application/System can use **by itself** without asking any third party system to know who/which/what is interacting.
+    - **Identity** is a piece of information that Application/System can use **by itself** without asking any third party system to distinguish who/which/what is interacting with others.
     For example: the primary key value of an user table.
 
     - **Credential** and **Identity** can be made from 2 different Systems/Applications.
