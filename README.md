@@ -19,7 +19,7 @@ Concepts: tl;dr
     For example: the primary key value of an user table.
 
 
- - **Authentication** only have meaning if we provide an **Authentication Context**.
+ - **Authentication** only have meaning in an **Authentication Context**.
  It is a place that authentication happened for a purpose.
  It contains **Credential** information.
  It can transport information back and forth.
