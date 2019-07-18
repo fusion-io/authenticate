@@ -20,8 +20,8 @@ Concepts: tl;dr
 
     - **Credential** and **Identity** can be made from 2 different Systems/Applications.
     For example: An user logged in into your website via `Login by Facebook` button,
-    Facebook will provide an `access_token` as a **Credential** and your website uses that `access_token` to know who the user is.
-
+    Facebook will provide an `access_token` as a **Credential**.
+    Your website uses that `access_token` and ask to Facebook again to get the Facebook's *user id*. Such *user id* is the identity.
 
  - **Authentication** only have meaning in an **Authentication Context**.
  It is a place that authentication happened for a purpose.
