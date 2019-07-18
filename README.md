@@ -18,6 +18,10 @@ Concepts: tl;dr
     - **Identity** is a piece of information that Application/System can use **by itself** without asking any third party system to know who/which/what is interacting.
     For example: the primary key value of an user table.
 
+    - **Credential** and **Identity** can be made from 2 different Systems/Applications.
+    For example: An user logged in into your website via `Login by Facebook` button,
+    Facebook will provide **access_token** and your website use that token to know who the user is.
+
 
  - **Authentication** only have meaning in an **Authentication Context**.
  It is a place that authentication happened for a purpose.
