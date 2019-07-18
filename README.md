@@ -12,9 +12,10 @@ Concepts: tl;dr
  - **Authentication** is about providing an **Identity** for a **Credential**.
  Not checking if some one has logged in or not, where:
 
-    - **Credential** can be a login form with **id** and **password**, or **access_token**.
+    - **Credential** is a piee of information that is made/send from the third party system/user to proof that the Application/System know who they are.
+    It can be a login form with **id** and **password**, or **access_token**.
 
-    - **Identity** is the piece of information that Application/System can use **by itself** to know who/which/what is interacting .
+    - **Identity** is a piece of information that Application/System can use **by itself** without asking any third party system to know who/which/what is interacting.
     For example: the primary key value of an user table.
 
 
