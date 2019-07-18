@@ -33,7 +33,7 @@ Concepts: tl;dr
  It also coupled with transport protocol (HTTP, Websocket, Console ...),
  which also mean it depends on the transport framework: **Koa**, **Express** / Http, **Socket.IO** / Websocket, ...
  It should not couple with the Application/System domain nor the second step.
- Implementations of the first step can be reuse inform of libraries or frameworks.
+ Implementations of the first step can be reuse in a form of libraries or frameworks.
 
  - The second step will be coupled with the application domain. It should be implemented by the developer.
 
