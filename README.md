@@ -23,7 +23,7 @@ Concepts: tl;dr
  It contains **Credential** information.
  It can transport information back and forth.
 
- - Authentication can be separated into 2 steps:
+ - **Authentication** can be separated into 2 steps:
 
     1. Reading the **Credential** from **Authentication Context**.
 
