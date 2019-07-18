@@ -24,6 +24,10 @@ class ExpressLocalProtocol {
             message: "UNAUTHENTICATED"
         })
     }
+
+    mount(consumer) {
+        return undefined;
+    }
 }
 
 

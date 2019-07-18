@@ -4,6 +4,7 @@ const FakeIdentityProvider = require('./FakeIdentityProvider');
 
 /**
  * @implements Protocol
+ * @implements Mountable
  */
 class KoaProtocol {
 
@@ -24,6 +25,12 @@ class KoaProtocol {
             message: "UNAUTHENTICATED",
         };
     }
+
+    mount(consumer) {
+        return async (context, next) => {
+            return consumer({context, next});
+        };
+    }
 }
 
 
@@ -36,7 +43,7 @@ auth.gateways.set('local', gateway);
 const app = new koa();
 
 app
-    .use(auth.mount('local', (context, next) => ({context, next})))
+    .use(auth.guard('local'))
     .use(context => context.body = context.identity)
 ;
 

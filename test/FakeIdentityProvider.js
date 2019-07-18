@@ -1,6 +1,10 @@
-module.exports = class FakeIdentityProvider {
+/**
+ *
+ * @implements IdentityProvider
+ */
+class FakeIdentityProvider {
 
-    provide({username}) {
+    async provide({username}) {
 
         if (username !== "rikky") {
             return false;
@@ -8,4 +12,7 @@ module.exports = class FakeIdentityProvider {
 
         return {name: 'rikky'};
     }
-};
+}
+
+module.exports = FakeIdentityProvider;
+
