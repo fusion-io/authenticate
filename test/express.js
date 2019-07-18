@@ -1,12 +1,9 @@
 const express = require('express');
 const {authenticator, Gateway} = require('./../index');
 const FakeIdentityProvider = require('./FakeIdentityProvider');
+const { mountExpress } = require('./../lib/utils');
 
-/**
- * @implements Protocol
- * @implements Mountable
- */
-class ExpressLocalProtocol {
+class LocalProtocol {
 
     resolve({request}) {
         return {
@@ -25,17 +22,11 @@ class ExpressLocalProtocol {
             message: "UNAUTHENTICATED"
         })
     }
-
-    mount(consumer) {
-        return (request, response, next) =>
-            consumer({request, response, next})
-        ;
-    }
 }
 
+const MountableLocalProtocol = mountExpress()(LocalProtocol);
 
-
-const gateway = new Gateway(new ExpressLocalProtocol(), new FakeIdentityProvider());
+const gateway = new Gateway(new MountableLocalProtocol(), new FakeIdentityProvider());
 
 authenticator.use('local', gateway);
 
