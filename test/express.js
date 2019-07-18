@@ -37,7 +37,7 @@ class ExpressLocalProtocol {
 
 const gateway = new Gateway(new ExpressLocalProtocol(), new FakeIdentityProvider());
 
-authenticator.gateways.set('local', gateway);
+authenticator.use('local', gateway);
 
 const app = new express();
 
