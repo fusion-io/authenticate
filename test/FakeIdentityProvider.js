@@ -15,4 +15,3 @@ class FakeIdentityProvider {
 }
 
 module.exports = FakeIdentityProvider;
-

@@ -1,5 +1,5 @@
 const koa = require('koa');
-const {Authenticator, Gateway} = require('./../index');
+const {authenticator, Gateway} = require('./../index');
 const FakeIdentityProvider = require('./FakeIdentityProvider');
 
 /**
@@ -34,16 +34,15 @@ class KoaProtocol {
 }
 
 
-const auth    = new Authenticator();
 const gateway = new Gateway(new KoaProtocol(), new FakeIdentityProvider());
 
 
-auth.gateways.set('local', gateway);
+authenticator.use('local', gateway);
 
 const app = new koa();
 
 app
-    .use(auth.guard('local'))
+    .use(authenticator.guard('local'))
     .use(context => context.body = context.identity)
 ;
 

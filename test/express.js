@@ -27,9 +27,9 @@ class ExpressLocalProtocol {
     }
 
     mount(consumer) {
-        return (request, response, next) => {
-            return ({request, response, next})
-        };
+        return (request, response, next) =>
+            consumer({request, response, next})
+        ;
     }
 }
 
