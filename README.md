@@ -37,3 +37,6 @@ Concepts: tl;dr
 
  - The second step will be coupled with the application domain. It should be implemented by the developer.
 
+
+ - **Authentication** is an important part, but **NOT** all of Security problems.
+ A good implementation of **Authentication** does not mean your Application/System is secure
