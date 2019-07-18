@@ -1,9 +1,10 @@
 const express = require('express');
-const {Authenticator, Gateway} = require('./../index');
+const {authenticator, Gateway} = require('./../index');
 const FakeIdentityProvider = require('./FakeIdentityProvider');
 
 /**
  * @implements Protocol
+ * @implements Mountable
  */
 class ExpressLocalProtocol {
 
@@ -26,21 +27,22 @@ class ExpressLocalProtocol {
     }
 
     mount(consumer) {
-        return undefined;
+        return (request, response, next) => {
+            return ({request, response, next})
+        };
     }
 }
 
 
-const auth    = new Authenticator();
+
 const gateway = new Gateway(new ExpressLocalProtocol(), new FakeIdentityProvider());
 
-
-auth.gateways.set('local', gateway);
+authenticator.gateways.set('local', gateway);
 
 const app = new express();
 
 app
-    .use(auth.mount('local', (request, response, next) => ({request, response, next})))
+    .use(authenticator.guard('local'))
     .use((request, response) => {
         response.json(request.identity);
     })

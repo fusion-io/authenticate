@@ -1,13 +1,14 @@
 {
   "name": "@fusion.io/authenticate",
   "version": "1.0.0",
-  "description": "",
+  "description": "Better Authentication for better Geeks.",
+  "repository": "https://github.com/fusion-io/authenticate",
   "main": "auth.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "rikky <son.levuthai@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "express": "^4.17.1",
     "koa": "^2.7.0"
