@@ -25,7 +25,7 @@ Concepts: tl;dr
     Facebook will provide an `access_token` as a **Credential**.
     Your website uses that `access_token` and ask to Facebook again to get the Facebook's *user id*. Such *user id* is an **Identity**.
 
-    - **Authentication** is considered as `success` if the **Identity** is provided. Otherwise, it is **failed**.
+    - **Authentication** is considered as **success** if the **Identity** is provided. Otherwise, it is **failed**.
 
  - **Authentication** only have meaning in an **Authentication Context**.
  It is a place that authentication happened for a purpose.
