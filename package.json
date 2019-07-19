@@ -10,7 +10,9 @@
   "author": "rikky <son.levuthai@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "koa": "^2.7.0"
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0"
   }
 }

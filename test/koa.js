@@ -1,47 +1,29 @@
 const koa = require('koa');
-const {authenticator, Gateway} = require('./../index');
+const {authenticator, Gateway, mountKoa} = require('./../index');
 const FakeIdentityProvider = require('./FakeIdentityProvider');
+const LocalProtocol = require('./../lib/Protocols/HeadlessLocal');
+const body = require('koa-body');
 
-/**
- * @implements Protocol
- * @implements Mountable
- */
-class KoaProtocol {
-
-    resolve({context}) {
-        return {
-            username: context.query.username,
-            password: context.query.password
-        };
-    }
-
-    async responseAuthenticated(identity, {context, next}) {
-        context.identity = identity;
-        return await next();
-    }
-
-    async responseUnAuthenticated(reason, {context}) {
-        context.body = {
-            message: "UNAUTHENTICATED",
-        };
-    }
-
-    mount(consumer) {
-        return async (context, next) => {
-            return consumer({context, next});
-        };
-    }
-}
-
+const KoaProtocol = mountKoa()(LocalProtocol);
 
 const gateway = new Gateway(new KoaProtocol(), new FakeIdentityProvider());
-
 
 authenticator.use('local', gateway);
 
 const app = new koa();
 
 app
+    .use(body())
+    .use(async (context, next) => {
+        try {
+            await next();
+        } catch (e) {
+            context.status = e.code || 500;
+            context.body = {
+                message: e.message
+            }
+        }
+    })
     .use(authenticator.guard('local'))
     .use(context => context.body = context.identity)
 ;
