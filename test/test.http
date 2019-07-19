@@ -1,5 +1,6 @@
-POST http://localhost:9000
+GET http://localhost:9000
 Content-Type: application/json
+Authorization: bearer rikky
 
 {
   "username": "rikky",

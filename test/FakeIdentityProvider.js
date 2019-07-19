@@ -4,11 +4,9 @@
  */
 class FakeIdentityProvider {
 
-    async provide({username}) {
+    async provide(credential) {
 
-        if (username !== "rikky") {
-            return false;
-        }
+        console.log(credential);
 
         return {name: 'rikky'};
     }

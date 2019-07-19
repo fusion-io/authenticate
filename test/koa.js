@@ -1,10 +1,10 @@
 const koa = require('koa');
 const {authenticator, Gateway, mountKoa} = require('./../index');
 const FakeIdentityProvider = require('./FakeIdentityProvider');
-const LocalProtocol = require('./../lib/Protocols/HeadlessLocal');
+const TokenBearer = require('./../lib/Protocols/TokenBearer');
 const body = require('koa-body');
 
-const KoaProtocol = mountKoa()(LocalProtocol);
+const KoaProtocol = mountKoa()(TokenBearer);
 
 const gateway = new Gateway(new KoaProtocol(), new FakeIdentityProvider());
 
