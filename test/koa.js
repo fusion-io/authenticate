@@ -13,7 +13,8 @@ let protocol = new KoaProtocol({
     host: 'https://graph.facebook.com',
     clientId: '2414786412178829',
     clientSecret: '5978e8545dd482ae8f3af197fc190c3a',
-    redirectUri: 'http://localhost:8080/facebook/callback'
+    redirectUri: 'http://localhost:8080/facebook/callback',
+    state: 'foobar'
 });
 
 const gateway = new Gateway(protocol, new FakeIdentityProvider());
