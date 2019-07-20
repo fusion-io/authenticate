@@ -233,7 +233,7 @@ app.use(localAuthentication);
 ```
 
 
-And for your lazy, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth2` and `HttpToken` we have
+And for your laziness, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth2` and `HttpToken` we have
 `ExpressLocal`,
 `KoaLocal`,
 `SocketIOLocal`,
