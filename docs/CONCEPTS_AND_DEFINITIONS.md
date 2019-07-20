@@ -6,7 +6,7 @@
 ### tl;dr
 
  - **Authentication** is about providing an **Identity** for a **Credential**.
- Not checking if some one has logged in or not, where:
+ Not just checking if some one has logged in or not, where:
 
     - **Credential** is a piece of information that is made/sent from the third party system/user to proof that the Application/System knows who they are.
     It can be a login form with **id** and **password**, or an **access_token**, ...
