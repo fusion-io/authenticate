@@ -1,13 +1,9 @@
 @fusion.io/authenticate
 -----------------------
 
-Better Authentication for better Geeks.
+# CONCEPTS
 
-
-In short, this is an authentication framework.
-Much like [PassportJS](http://www.passportjs.org/).
-
-Concepts: tl;dr
+### tl;dr
 
  - **Authentication** is about providing an **Identity** for a **Credential**.
  Not checking if some one has logged in or not, where:

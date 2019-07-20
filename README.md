@@ -12,11 +12,11 @@ Much like [PassportJS](http://www.passportjs.org/).
 
 To get start, please follow these steps:
 
-1. Installation.
-2. Determine the authentication Protocol(s).
-3. Making Identity Provider(s).
-4. Register your gateway with Protocol and Identity Provider.
-5. Guard your resources.
+1. [Installation](#installation).
+2. [Determine the authentication Protocol(s)](#determine-the-authentication-protocols).
+3. [Making Identity Provider(s)](#making-identity-providers).
+4. [Register your gateway with Protocol and Identity Provider](#register-your-gateway-with-protocol-and-identity-provider).
+5. [Guard your resources](#guard-your-resources).
 
 ## Installation
 
@@ -267,21 +267,27 @@ yargs.middleware(authenticator.guard('local'));
 ### Good news for users don't find a suitable protocol.
 
 So if you don't think these above protocols are suitable, and you decided to write one for you.
-That's great! Now you are becoming seriously! Please check the CUSTOM PROTOCOL part.
+That's great! Now you are becoming seriously! Please check the [CUSTOM PROTOCOL](docs/CUSTOM_PROTOCOL.md) part.
 
 
-# CUSTOM PROTOCOL
+### Tips:
 
-TBD
 
 # BEST PRACTICES
 
 TBD
 
-# CONCEPTS
 
-Refer to docs/CONCEPTS_AND_DEFINITIONS
+# CUSTOM PROTOCOL
+
+Please checkout how the [document about making a Protocol](docs/CUSTOM_PROTOCOL.md).
+
+# CONCEPTS AND DEFINITIONS
+
+Please check out [our concepts](docs/CONCEPTS_AND_DEFINITIONS.md) when building this package.
 
 # WORDS FROM AUTHOR
 
-We love `PassportJS` but we want to say farewell to it!
+First of all, we love `PassportJS`!
+
+[Here are the reasons](docs/REASONS_WHY.md) why we moved out of the PassportJS and decided to create this package.
