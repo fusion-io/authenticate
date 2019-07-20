@@ -158,7 +158,7 @@ let protocol = new HttpTokenBearer();
 ```
 
 
-You can also register as many gates as you want.
+You can have as many gates as you want.
 Just use the `authenticator.gate(gateName, protocol, identityProvider);` to register a new gate.
 
 ## Guard your resources
