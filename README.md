@@ -138,7 +138,7 @@ import { authenticator, HeadlessLocal } from "@fusion.io/authenticate";
 authenticator.gate('local', new HeadlessLocal(), MyLocalUserProvider());
 ```
 
-In the example code above, we've registered a gateway called `local` with [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal) protocol and your `MyLocalUserProvider` identity provider
+In the example code above, we've registered a gateway called `local` with [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal) protocol and your `MyLocalUserProvider` identity provider.
 
 We supports 3 basic protocols for you:
 
