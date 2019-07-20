@@ -19,7 +19,6 @@ exports.authenticator   = new Authenticator();
 exports.mountExpress    = mountExpress;
 exports.mountKoa        = mountKoa;
 exports.mountSocketIO   = mountSocketIO;
-exports.mountYargs      = mountYargs;
 
 // Basic protocols
 exports.HeadlessLocal   = HeadlessLocal;
