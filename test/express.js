@@ -6,9 +6,7 @@ const HttpOAuth2 = require('./../lib/Protocols/HttpOAuth2');
 const ExpressProtocol = mountExpress()(HttpOAuth2);
 const bp = require('body-parser');
 
-let protocol = new ExpressProtocol();
-
-protocol.setOptions({
+let protocol = new ExpressProtocol({
     host: 'https://graph.facebook.com',
     clientId: '2414786412178829',
     clientSecret: '5978e8545dd482ae8f3af197fc190c3a',

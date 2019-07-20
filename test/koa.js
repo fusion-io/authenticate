@@ -1,12 +1,22 @@
 const koa = require('koa');
 const {authenticator, Gateway, mountKoa} = require('./../index');
 const FakeIdentityProvider = require('./FakeIdentityProvider');
-const TokenBearer = require('./../lib/Protocols/TokenBearer');
+const HttpOAuth2 = require('./../lib/Protocols/HttpOAuth2');
 const body = require('koa-body');
+const Router = require('koa-router');
+const router = new Router();
 
-const KoaProtocol = mountKoa()(TokenBearer);
+const KoaProtocol = mountKoa()(HttpOAuth2);
 
-const gateway = new Gateway(new KoaProtocol(), new FakeIdentityProvider());
+
+let protocol = new KoaProtocol({
+    host: 'https://graph.facebook.com',
+    clientId: '2414786412178829',
+    clientSecret: '5978e8545dd482ae8f3af197fc190c3a',
+    redirectUri: 'http://localhost:8080/facebook/callback'
+});
+
+const gateway = new Gateway(protocol, new FakeIdentityProvider());
 
 authenticator.use('local', gateway);
 
@@ -21,11 +31,21 @@ app
             context.status = e.code || 500;
             context.body = {
                 message: e.message
-            }
+            };
+            throw e;
+
         }
     })
-    .use(authenticator.guard('local'))
-    .use(context => context.body = context.identity)
+    .use(router.routes())
+    .use(router.allowedMethods())
 ;
+
+router.get('/facebook', authenticator.guard('local'));
+router.get('/facebook/callback', authenticator.guard('local'), (ctx) => {
+    ctx.body = {
+        ...ctx.identity
+    }
+});
+
 
 app.listen(8080);
