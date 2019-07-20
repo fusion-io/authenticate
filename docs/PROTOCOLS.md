@@ -168,7 +168,16 @@ class MyAweSomeExpressProtocol {
                 })
 
                 // Not awesome problem!
-                .catch(error => next(error))
+                .catch(error => {
+
+                    if (error instance of UnAuthenticated) {
+                        return response.status(401).json({
+                            message: error
+                        });
+                    }
+
+                    next(error);
+                })
             ;
         }
     }
@@ -178,7 +187,7 @@ class MyAweSomeExpressProtocol {
 
 Now, it's time to showoff!
 
-```
+```javascript
 authenticator.gate('awesome', new MyAweSomeExpressProtocol(), new YourAweSomeUserProvider());
 
 app.get('/im-awe-some',
