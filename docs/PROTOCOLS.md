@@ -39,7 +39,7 @@ which contains authentication information and/or other related data and services
 
 Here is a TypedScript definition of a **Protocol**.
 
-```typedscript
+```ts
 
 interface Protocol {
 
@@ -68,7 +68,7 @@ and finish its job.
 
 Here is the TypedScript definition of **Mountable**:
 
-```typedscript
+```ts
 /**
  * A callback function that consumes the context,
  * runs the authentication and returns the Identity.
