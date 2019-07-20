@@ -72,3 +72,13 @@ export interface Credential {
 export interface Identity {
 
 }
+
+/**
+ * A service for verifying the an oauth2 state
+ */
+export interface StateVerifier {
+
+    makeState(): Promise<string>;
+
+    verify(stateFromOAuth2Server): Promise<boolean>
+}
