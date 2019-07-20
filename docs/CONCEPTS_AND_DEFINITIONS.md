@@ -35,7 +35,7 @@
     2. Finding the related **Identity** with such **Credential**.
 
  - The first step will be coupled with authentication standard (OpenID, OAuth2).
- It also coupled with transport protocol (HTTP, WebSocket, Console ...),
+ It also coupled with transport protocol (HTTP, WebSocket, ...),
  which also mean it depends on the transport framework: **Koa**, **Express** / Http, **Socket.IO** / Websocket, ...
  It should not couple with the Application/System domain nor the second step.
  Implementations of the first step can be reuse in a form of libraries or frameworks.

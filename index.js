@@ -2,8 +2,7 @@ const Authenticator     = require('./lib/Authenticator');
 const {
     mountExpress,
     mountKoa,
-    mountSocketIO,
-    mountYargs
+    mountSocketIO
 }                       = require('./lib/utils');
 
 const HeadlessLocal     = require('./lib/Protocols/HeadlessLocal');
@@ -31,7 +30,6 @@ exports.HttpTokenBearer = HttpTokenBearer;
 exports.KoaLocal        = mountKoa()(HeadlessLocal);
 exports.ExpressLocal    = mountExpress()(HeadlessLocal);
 exports.SocketIOLocal   = mountSocketIO()(HeadlessLocal);
-exports.YargsLocal      = mountYargs()(HeadlessLocal);
 
 exports.KoaOAuth2       = mountKoa()(HttpOAuth2);
 exports.ExpressOAuth2   = mountExpress()(HttpOAuth2);
@@ -40,4 +38,3 @@ exports.KoaToken        = mountKoa()(HttpTokenBearer);
 exports.ExpressToken    = mountExpress()(HttpTokenBearer);
 
 exports.SocketIOToken   = require('./lib/Protocols/SocketIOToken');
-exports.YargsToken      = require('./lib/Protocols/YargsToken');

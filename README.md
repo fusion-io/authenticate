@@ -208,7 +208,7 @@ try {
 
 ```
 
-### Good news for `Koa`, `Express`, `Socket.IO` and `Yargs` users!
+### Good news for `Koa`, `Express`, `Socket.IO` users!
 
 We love `middleware` style! If you are using above frameworks,
 you'll have a very nice place to guard your resources. The mighty `middleware`:
@@ -245,13 +245,11 @@ And for your laziness, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth
 `ExpressLocal`,
 `KoaLocal`,
 `SocketIOLocal`,
-`YargsLocal`,
 `KoaOAuth2`,
 `ExpressOAuth2`,
 `KoaToken`,
 `ExpressToken`,
 `SocketIOToken`,
-`YargsToken`
 
 
 These are framework specific protocols.
@@ -270,8 +268,6 @@ app.use(authenticator.guard('local'));
 // socket or namespace
 socket.use(authenticator.guard('local'));
 
-// Yargs
-yargs.middleware(authenticator.guard('local'));
 ```
 
 
