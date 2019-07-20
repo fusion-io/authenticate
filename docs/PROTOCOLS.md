@@ -195,7 +195,7 @@ app.get('/im-awe-some',
     // You can now .guard() an express route
     authenticator.guard('awesome'),
 
-    (request, response) {
+    (request, response) => {
         response.json({
             awesome: request.awesomeIdentity
         })
