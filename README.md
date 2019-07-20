@@ -296,7 +296,7 @@ but sharing the same way of authentication (same way of providing `Credential`).
 
     For example:  *your application may want to authenticate **users** and **organizations** account.
 In both cases, they will provide **email** and **password** as `Credential`.
-In this case, it will help your code DRY by not providing 2 **Protocols** that are identical to each other.*
+Using the same **Protocol** will help your code DRY by not providing 2 **Protocols** that are identical to each other.*
 
 # BEST PRACTICES
 
