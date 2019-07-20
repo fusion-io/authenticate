@@ -38,3 +38,6 @@ exports.ExpressOAuth2   = mountExpress()(HttpOAuth2);
 
 exports.KoaToken        = mountKoa()(HttpTokenBearer);
 exports.ExpressToken    = mountExpress()(HttpTokenBearer);
+
+exports.SocketIOToken   = require('./lib/Protocols/SocketIOToken');
+exports.YargsToken      = require('./lib/Protocols/YargsToken');
