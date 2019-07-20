@@ -4,7 +4,7 @@
 Better Authentication for better Geeks.
 
 
-In short, this is an authentication framework.
+In short, this is an authentication framework for Node.JS
 Much like [PassportJS](http://www.passportjs.org/).
 
 # GETTING STARTED
@@ -166,11 +166,11 @@ Now, your gate is ready, let's guard your resource with your gate.
 
 ```javascript
 
-const UnAuthenticated = require('UnAuthenticated');
+const { UnAuthenticated, Aborted } = require('@fusion.io/authenticate');
 
 // or ES6
 
-import { UnAuthenticated } from "@fusion.io/authenticate";
+import { UnAuthenticated, Aborted } from "@fusion.io/authenticate";
 
 ...
 
@@ -206,22 +206,29 @@ you'll have a very nice place to guard your resources. The mighty `middleware`:
 
 ```javascript
 
-    // For example, here we'll wrap the `.authentcate()` method inside a Koa middleware.
+// For example, here we'll wrap the `.authentcate()` method inside a Koa middleware.
 
-    const localAuthentication async (context, next) => {
-        try {
-            let userIdentity = await authenticator.authenticate('local', context.request.body);
+const localAuthentication = async (context, next) => {
+    try {
+        let userIdentity = await authenticator.authenticate('local', context.request.body);
 
-            context.identity = userIdentity;
-            await next();
+        context.identity = userIdentity;
+        await next();
 
-        } catch (error) {
-            if (error instanceof Aborted) {
-                return;
-            }
-            throw error;
+    } catch (error) {
+        if (error instanceof Aborted) {
+            return;
         }
+        throw error;
     }
+}
+
+
+// So now, we can do something like:
+
+
+app.use(localAuthentication);
+
 ```
 
 
@@ -233,14 +240,15 @@ And for your lazy, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth2` a
 `KoaOAuth2`,
 `ExpressOAuth2`,
 `KoaToken`,
-`ExpressToken`,
+`ExpressToken`
 
 These are framework specific protocols.
 It have ability to `mount` to your framework as a middleware and `guard` its endpoints.
 
 You can replace the above code by simple `authenticator.guard()` method:
 
-```
+```javascript
+
 // Koa / Express
 // app or router
 app.use(authenticator.guard('local'));
@@ -248,7 +256,7 @@ app.use(authenticator.guard('local'));
 
 // Socket.IO
 // socket or namespace
-socket.use(authenticator.guard('token'));
+socket.use(authenticator.guard('local'));
 
 // Yargs
 yargs.middleware(authenticator.guard('local'));
