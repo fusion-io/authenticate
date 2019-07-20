@@ -141,7 +141,7 @@ class MyAweSomeExpressProtocol {
         if (!aweSomeCredential) {
 
             // Throwing UnAuthenticated error here
-            // will tell the authenticator the request
+            // will tell the authenticator that the request
             // is not authenticated.
             throw new UnAuthenticated("You are not awesome!");
         }

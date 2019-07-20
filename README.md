@@ -289,7 +289,7 @@ It's the building block of authentication process.
     For example: *your application may support `token` authentication via web APIs.
 And you also want to support `token` authentication via WebSocket.
 But no matter what the transport layer is, they still returning a `token` as a `Credential`,
-using the same **Identity Provider** in this case will enable you ability to authenticate the same user over multiple transport layers.*
+using the same **Identity Provider** in this case will enable your ability to authenticate the same user over multiple transport layers.*
 - In reverse, you can also have many **Identity Providers** that sharing the same **Protocol** when we have more than one **Type Of User**,
 but sharing the same way of authentication (same way of providing `Credential`).
 
