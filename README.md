@@ -21,7 +21,7 @@ To get start, please follow these steps:
 For further topics, please checkout:
 
 - [Some best practices about authentications](docs/BEST_PRACTICES.md).
-- [Document about making a Protocol](docs/CUSTOM_PROTOCOL.md).
+- [Document about making a Protocol](docs/PROTOCOLS.md#writing-custom-protocol).
 - [Our core concepts when building this package](docs/CONCEPTS_AND_DEFINITIONS.md).
 - [Reasons why](docs/REASONS_WHY) we love and leave [PassportJS](http://www.passportjs.org/).
 
@@ -144,7 +144,7 @@ We supports 3 basic protocols for you:
 
 `HeadlessLocal`, `HttpOAuth2` and `HttpTokenBearer`. You can replace the above `HeadlessLocal` to any one of them.
 
-For more usage of providers, please check out the Protocols documentation . // TODO
+For more usage of providers, please check out the Protocols [documentation](docs/PROTOCOL.md).
 
 ```javascript
 let protocol = new HeadlessLocal();
@@ -278,7 +278,7 @@ yargs.middleware(authenticator.guard('local'));
 ### Good news for users don't find a suitable protocol.
 
 So if you don't think these above protocols are suitable, and you decided to write one for you.
-That's great! Now you are becoming seriously! Please check the [CUSTOM PROTOCOL](docs/CUSTOM_PROTOCOL.md) part.
+That's great! Now you are becoming seriously! Please check the [CUSTOM PROTOCOL](docs/PROTOCOLS.md#writing-custom-protocol) part.
 
 
 ### Tips:
@@ -307,7 +307,7 @@ Please checkout some [best practices](docs/BEST_PRACTICES.md) about authenticati
 
 # CUSTOM PROTOCOL
 
-Please checkout how the [document about making a Protocol](docs/CUSTOM_PROTOCOL.md).
+Please checkout how the [document about making a Protocol](docs/PROTOCOLS.md#writing-custom-protocol).
 
 # CONCEPTS AND DEFINITIONS
 
