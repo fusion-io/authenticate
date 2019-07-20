@@ -18,7 +18,7 @@ To get start, please follow these steps:
 4. Register your gateway with Protocol and Identity Provider.
 5. Guard your resources.
 
-## 1. Installation
+## Installation
 
 To install this package, please run:
 
@@ -26,7 +26,7 @@ To install this package, please run:
 npm install --save @fusion.io/authenticate
 ```
 
-## 2. Determine the authentication Protocol(s)
+## Determine the authentication Protocol(s)
 
 `Hey! hey! What is protocol?`
 
@@ -50,7 +50,7 @@ token. So let's add `Token` into your shopping cart!
 
 This step is just it. No code! Just cheap talk! :D
 
-## 3. Making Identity Provider(s).
+## Making Identity Provider(s).
 
 `Hey! hey! What is Identity Provider?`
 
@@ -115,7 +115,7 @@ In general, your Identity provider is nothing special but a class with an `async
 
 Where `credential` is the information that you'll get from the protocol.
 
-## 4. Register your gateway with Protocol and Identity Provider
+## Register your gateway with Protocol and Identity Provider
 
 Now let's mixed up your Identity Provider and protocol.
 
@@ -161,7 +161,7 @@ let protocol = new HttpTokenBearer();
 You can also register as many gates as you want.
 Just use the `authenticator.gate(gateName, protocol, identityProvider);` to register a new gate.
 
-## 5. Guard your resources
+## Guard your resources
 
 Now, your gate is ready, let's guard your resource with your gate.
 
