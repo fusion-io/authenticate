@@ -278,13 +278,15 @@ It's the building block of authentication process.
 - Relationship between **Protocol** and **IdentityProvider** is many-to-many.
 **Gate** is a pivot representing that relationship.
 - You can have many **Protocols** that sharing the same **Identity Provider** if they providing the same `Credential`.
-For example: *your application may support `token` authentication via web APIs.
+
+    For example: *your application may support `token` authentication via web APIs.
 And you also want to support `token` authentication via WebSocket.
 But no matter what the transport layer is, they still returning a `token` as a `Credential`,
 using the same **Identity Provider** in this case will enable you ability to authenticate the same user over multiple transport layers.*
 - In reverse, you can also have many **Identity Providers** that sharing the same **Protocol** when we have more than one **Type Of User**,
 but sharing the same way of authentication (same way of providing **Credential**).
-For example:  *your application may want to authenticate **users** and **organizations** account.
+
+    For example:  *your application may want to authenticate **users** and **organizations** account.
 In both cases, they will provide **email** and **password** as **Credential**.
 In this case, it will help your code DRY by not providing 2 **Protocols** that are identical to each other.*
 
