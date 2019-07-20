@@ -1,7 +1,8 @@
 /**
- * A callback function that consumes the context.
+ * A callback function that consumes the context,
+ * runs the authentication and returns the Identity.
  */
-interface ContextConsumer { (context): void }
+interface ContextConsumer { (context): Promise<Identity> }
 
 /**
  * In the most cases, the protocol by itself can resolve
@@ -14,8 +15,7 @@ export interface Mountable {
 }
 
 /**
- * A Service that can load the Credential from a give environment.
- * That environment so-called as the Authentication Context.
+ * A Protocol is a service the will resolve the `Credential` from a given context.
  */
 export interface Protocol {
 
