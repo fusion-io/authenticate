@@ -200,8 +200,8 @@ mount to the transport layer.
 
 By doing so, it can `consume` the `context` and resolve the `Credential` by itself.
 
-After the authentication process has been finished, a `Mountable` Protocol also binds the found `Identity` back to the context
-and finish its job.
+After the authentication process has been success, a `Mountable` Protocol also binds the found `Identity` back to the context
+and finishes its job.
 
 *In most cases, `mount()` method will return a `middleware` of a specific transport framework (koa, express, socket.io, or even yargs);*
 
