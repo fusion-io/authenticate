@@ -160,7 +160,7 @@ These 2 protocols will read the `Credential` by accessing the `ctx.session` (for
 
 You can pass to its constructor the key field that will be used to read that `session` object. Default key is `credential`.
 
-```
+```javascript
 /// If your session object like this
 //
 //  session: { userCredential: 'some-user-id' };
