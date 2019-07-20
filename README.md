@@ -245,14 +245,14 @@ app.use(localAuthentication);
 And for your laziness, we also wrapped it. So beside [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal), [`HttpOAuth2`](docs/PROTOCOLS.md#httpoauth2) and [`HttpTokenBearer`](docs/PROTOCOLS.md#httptokenbearer) we have
 [`ExpressLocal`](docs/PROTOCOLS.md#expresslocal),
 [`KoaLocal`](docs/PROTOCOLS.md#koalocal),
-[`SocketIOLocal`](docs/PROTOCOLS.md#socketiolocal)),
+[`SocketIOLocal`](docs/PROTOCOLS.md#socketiolocal),
 [`KoaOAuth2`](docs/PROTOCOLS.md#koaoauth2-and-expressoauth2),
 [`ExpressOAuth2`](docs/PROTOCOLS.md#koaoauth2-and-expressoauth2),
 [`KoaToken`](docs/PROTOCOLS.md#koatoken-and-express-token),
 [`ExpressToken`](docs/PROTOCOLS.md#koatoken-and-express-token),
 [`SocketIOToken`](docs/PROTOCOLS.md#socketiotoken),
 [`KoaSession`](docs/PROTOCOLS.md#koasession-and-expresssession),
-[`ExpressSession`](docs/PROTOCOLS.md#koasession-and-expresssession)
+[`ExpressSession`](docs/PROTOCOLS.md#koasession-and-expresssession).
 
 These are framework specific protocols.
 It have ability to `mount` to your framework as a middleware and `guard` its endpoints.
