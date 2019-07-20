@@ -11,8 +11,6 @@ Much like [PassportJS](http://www.passportjs.org/).
 
 To get start, please follow these steps:
 
-Installation
-
 1. Installation.
 2. Determine the authentication Protocol(s).
 3. Making Identity Provider(s).
