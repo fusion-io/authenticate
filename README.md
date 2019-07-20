@@ -9,7 +9,7 @@ Much like [PassportJS](http://www.passportjs.org/).
 
 # GETTING STARTED
 
-To get start, please following one of these steps:
+To get start, please follow these steps:
 
 Installation
 
