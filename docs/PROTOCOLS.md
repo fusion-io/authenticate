@@ -16,18 +16,157 @@ const protocol = new HeadlessLocal();
 
 // You can also pass an optional options to the constructor
 
-const protocolOptions = {
+const options = {
     usernameField: 'email',
     passwordField: 'pass'
 }
+
+const otherLocalProtocol = new HeadlessLocal(options);
 ```
+
+With this Protocol, you can't use `authenticator.guard()`. You should use the derived protocols of this one:
+
+[`ExpressLocal`](#expresslocal) and [`KoaLocal`](#koalocal).
 
 ## `ExpressLocal`
 
-Is a subclass of `HeadlessLocal` protocol, specialized for [express framework](http://expressjs.com)
+Is a subclass of `HeadlessLocal` protocol, specialized for [express framework](http://expressjs.com).
+If you are using `authenticator.guard()`, the protocol by itself will read the `request.body` for the `Credential`.
 
-// TODO
+*Don't forget to use `body-parser`!  😆*
 
+## `KoaLocal`
+
+Is another subclass of  `HeadlessLocal` protocol, specialized for [koa framework](https://koajs.com/).
+If you are using `authenticator.guard()`, again, the protocol will try to read from `ctx.request.body`
+
+*And also don't forget to use `body-parser`, again!*
+
+## `SocketIOLocal`
+
+Is another subclass of `HeadlessLocal` protocol, specialized for [SocketIO](https://socket.io/).
+
+But **DON'T** use it! We created it just for Proof - of - Concepts. You better try the [`SocketIOToken`](#socketiotoken).
+
+## `HttpOAuth2`
+
+This is the protocol for HTTP only. So don't try OAuth2 for Socket.IO 😅!
+
+You can pass several options to this protocol.
+
+```javascript
+
+const options = {
+
+    // required options
+    clientID        : 'your-client-id',
+    clientSecret    : 'your-client-secret',
+    host            : 'your-oauth2-server',
+    redirectUri     : 'http://your.domain.com/oauth2/callback',
+
+    // optional
+    scope           : ['email'] // List of your scopes
+    state           : 'your-state'
+}
+```
+
+One option that you should be noticed is `state`.
+
+You can using a plain string for `state` option. Or you can write your own `StateVerifier`.
+
+Bellow is the `StateVerifier` interface that you should implement:
+
+```ts
+/**
+ * A service for verifying the an oauth2 state
+ */
+interface StateVerifier {
+
+    /**
+     * Generates the state when the Protocol call the authorize request.
+     */
+    makeState(): Promise<string>;
+
+    /**
+     * Determines if the state responded from the OAuth2 server is valid.
+     *
+     * @param stateFromOAuth2Server
+     */
+    verify(stateFromOAuth2Server): Promise<boolean>
+}
+```
+
+Using `StateVerifier` will help you prevent `CSRF` attack when using `OAuth2` protocol.
+So we encourage you write one for it. (TODO I'm also making one for ya! ✌️)
+
+Since with this Protocol, you can't use `authenticator.guard()`.
+We also encourage you using derived subclass of this protocol [`KoaOAuth2` and `ExpressOAuth2`](#koaoauth2-and-expressoauth2).
+
+## `KoaOAuth2` and `ExpressOAuth2`
+
+*Please follow configuration of the [`HttpOAuth2`](#httpoauth2). These 2 protocols can be configured exactly the same.*
+
+To use `OAuth2` protocol is a little bit complex. You'll have to define 2 routes.
+
+- One for authorize URL, it will perform a redirect to the `OAuth2` Authorization Server to get the granted `code`.
+- One route for exchange that `code` into `access_token`.
+
+```javascript
+
+// Example using express and OAuth2 to let user login via their Facebook account.
+// I bet Koa users don't hate me because of not demo the source in Koa.
+
+app.get('/facebook', authenticator.guard('facebook'));
+
+app.get('/facebook/callback',
+    authentication.guard('facebook'),
+    (request, response) => {
+
+        // TODO
+        // now you can access to your facebook user
+
+        let facebookUserId = request.identity;
+    });
+
+```
+
+## `HttpTokenBearer`
+
+This is a generic protocol for Http. It will try to read the token from the request by following order:
+
+1. Request's `Authorization` header;
+2. Request's `token` key in query string;
+3. Request's `token` key in body;
+
+With this Protocol, you can't use `authenticator.guard()`.
+Please use its derived protocols [`KoaToken` and `ExpressToken`](#koatoken-and-expresstoken) if you able to do so.
+
+## `KoaToken` and `ExpressToken`
+
+Nothing to do with these protocol. You can just grab it and play!
+Of course you can use `authenticator.guard()` with these guys.
+
+## `SocketIOToken`
+
+This protocol is specialized for [`Socket.IO`](https://socket.io).
+
+It will read the `token` from the `socket.handshake.query`.
+Of course you can use `authenticator.guard()` with this protocol.
+
+
+## `KoaSession` and `ExpressSession`
+
+These 2 protocols will read the `Credential` by accessing the `ctx.session` (for koa) and `request.session` (for express).
+
+You can pass to its constructor the key field that will be used to read that `session` object. Default key is `credential`.
+
+```
+/// If your session object like this
+//
+//  session: { userCredential: 'some-user-id' };
+
+const protocol = new ExpressSession('userCredential');
+```
 
 # WRITING CUSTOM PROTOCOL
 

@@ -67,4 +67,14 @@ You can think of your `public key` is `Identity` and `private key` is `Credentia
 
 ## `Error` is not nutrition. Don't swallow it!
 
-// TODO
+We don't have `.authenticate() === false`. In our design concepts, `Authentication` is finding `Identity` by `Credential`.
+So if we could not find an `Identity` for some reasons, we'll throw an Error instead of returning some falsy value.
+
+This will help your code more predictable, calling `.authenticate()` and do everything straight forward is better than
+a conditional check. You can also have a central place for handling `UnAuthenticate` error.
+
+Throwing an error will also stop the current execution `context`, that `context` is the actual `Authentication Context` that we
+often mention about, unless you try-catch it.  😩
+
+Because of that, **DON'T** put too much try-catch block in your application unless you really need to do so.
+Don't be afraid of the try-catch block in our demo. It is just the demo, real world is much nicer!  😛

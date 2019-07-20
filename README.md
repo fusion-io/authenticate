@@ -6,7 +6,7 @@ Better Authentication for better Geeks.
 
 In short, this is an authentication framework for Node.JS
 
-Much like [PassportJS](http://www.passportjs.org/).
+Much like [PassportJS](http://www.passportjs.org/).  😛
 
 # GETTING STARTED
 
@@ -138,11 +138,12 @@ import { authenticator, HeadlessLocal } from "@fusion.io/authenticate";
 authenticator.gate('local', new HeadlessLocal(), MyLocalUserProvider());
 ```
 
-In the example code above, we've registered a gateway called `local` with `HeadlessLocal` protocol and your `MyLocalUserProvider` identity provider
+In the example code above, we've registered a gateway called `local` with [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal) protocol and your `MyLocalUserProvider` identity provider
 
 We supports 3 basic protocols for you:
 
-`HeadlessLocal`, `HttpOAuth2` and `HttpTokenBearer`. You can replace the above `HeadlessLocal` to any one of them.
+[`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal), [`HttpOAuth2`](docs/PROTOCOLS.md#httpoauth2) and [`HttpTokenBearer`](docs/PROTOCOLS.md#httptokenbearer)
+. You can replace the above [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal) to any one of them.
 
 For more usage of Protocol, please check out the [Protocols documentation](docs/PROTOCOLS.md).
 
@@ -241,17 +242,17 @@ app.use(localAuthentication);
 ```
 
 
-And for your laziness, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth2` and `HttpToken` we have
-`ExpressLocal`,
-`KoaLocal`,
-`SocketIOLocal`,
-`KoaOAuth2`,
-`ExpressOAuth2`,
-`KoaToken`,
-`ExpressToken`,
-`SocketIOToken`,
-`KoaSession`,
-`ExpressSession`
+And for your laziness, we also wrapped it. So beside [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal), [`HttpOAuth2`](docs/PROTOCOLS.md#httpoauth2) and [`HttpTokenBearer`](docs/PROTOCOLS.md#httptokenbearer) we have
+[`ExpressLocal`](docs/PROTOCOLS.md#expresslocal),
+[`KoaLocal`](docs/PROTOCOLS.md#koalocal),
+[`SocketIOLocal`](docs/PROTOCOLS.md#socketiolocal)),
+[`KoaOAuth2`](docs/PROTOCOLS.md#koaoauth2-and-expressoauth2),
+[`ExpressOAuth2`](docs/PROTOCOLS.md#koaoauth2-and-expressoauth2),
+[`KoaToken`](docs/PROTOCOLS.md#koatoken-and-express-token),
+[`ExpressToken`](docs/PROTOCOLS.md#koatoken-and-express-token),
+[`SocketIOToken`](docs/PROTOCOLS.md#socketiotoken),
+[`KoaSession`](docs/PROTOCOLS.md#koasession-and-expresssession),
+[`ExpressSession`](docs/PROTOCOLS.md#koasession-and-expresssession)
 
 These are framework specific protocols.
 It have ability to `mount` to your framework as a middleware and `guard` its endpoints.
@@ -260,14 +261,22 @@ You can replace the above code by simple `authenticator.guard()` method:
 
 ```javascript
 
-// Koa / Express
+// For koa:
+//
 // app or router
 app.use(authenticator.guard('local'));
+// Then you can get the identity by accessing `context.identity`.
 
+// For express:
+//
+// app or router
+app.use(authenticator.guard('local'));
+// Then you can get the identity by accessing `request.identity`.
 
 // Socket.IO
 // socket or namespace
 socket.use(authenticator.guard('local'));
+// Then you can get the identity by accessing `socket.identity`.
 
 ```
 
