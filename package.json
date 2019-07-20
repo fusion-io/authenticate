@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Better Authentication for better Geeks.",
   "repository": "https://github.com/fusion-io/authenticate",
-  "main": "auth.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
