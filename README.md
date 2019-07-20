@@ -144,7 +144,7 @@ We supports 3 basic protocols for you:
 
 `HeadlessLocal`, `HttpOAuth2` and `HttpTokenBearer`. You can replace the above `HeadlessLocal` to any one of them.
 
-For more usage of providers, please check out the Protocols [documentation](docs/PROTOCOLS.md).
+For more usage of Protocol, please check out the [Protocols documentation](docs/PROTOCOLS.md).
 
 ```javascript
 let protocol = new HeadlessLocal();
