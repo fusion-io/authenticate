@@ -120,37 +120,160 @@ Where `credential` is the information that you'll get from the protocol.
 
 Now let's mixed up your Identity Provider and protocol.
 
-// TBD
-
-
-But first, what's your framework that's you're using?
-
-If you are using express or any express core frameworks:
-
 ```javascript
 
-const { authenticator, ExpressLocal } = require('@fusion.io/authenticate');
+const { authenticator, HeadlessLocal } = require('@fusion.io/authenticate');
 
 // or ES6:
 
-import { authenticator, ExpressLocal } from "@fusion.io/authenticate";
+import { authenticator, HeadlessLocal } from "@fusion.io/authenticate";
 
-authenticator.gate('local', new ExpressLocal(), MyLocalUserProvider());
+authenticator.gate('local', new HeadlessLocal(), MyLocalUserProvider());
 ```
 
-We'll support `KoaLocal`, `ExpressLocal`, `SocketIOLocal`, `YargsLocal`, `KoaOAuth2`, `ExpressOAuth2`, `KoaToken`, `ExpressToken`.
+In the example code above, we've registered a gateway called `local` with `HeadlessLocal` protocol and your `MyLocalUserProvider` identity provider
 
-If you're unlucky and your framework is not in above list. It is also fine!
+We supports 3 basic protocols for you:
 
-We have some abstract protocol that might useful for you: `HeadlessLocal`, `HttpOAuth2`, `HttpTokenBearer`
+`HeadlessLocal`, `HttpOAuth2` and `HttpTokenBearer`. You can replace the above `HeadlessLocal` to any one of them.
 
+For more usage of providers, please check out the Protocols documentation . // TODO
+
+```javascript
+let protocol = new HeadlessLocal();
+
+// or
+const oauth2Options = {
+    clientID: 'your-client-id',
+    clientSecret: 'your-client-secret'
+
+    // optional:
+    scope: ['email'] // List of your oauth2 scopes,
+    state: 'your-state' // can also be an impelemntation of the StateVerifier interface. Please check /typings/auth.d.ts for more about this interface.
+}
+
+let protocol = new HttpOAuth2(options);
+// or
+
+let protocol = new HttpTokenBearer();
+```
+
+
+You can also register as many gates as you want.
+Just use the `authenticator.gate(gateName, protocol, identityProvider);` to register a new gate.
+
+## 5. Guard your resources
+
+Now, your gate is ready, let's guard your resource with your gate.
+
+```javascript
+
+const UnAuthenticated = require('UnAuthenticated');
+
+// or ES6
+
+import { UnAuthenticated } from "@fusion.io/authenticate";
+
+...
+
+// Some where inside your code.
+
+try {
+    let userIdentity = await authenticator.authenticate('local', {username: 'rikky', password: 'Won\'t tell ya!'} );
+
+    // Here is a safezone. User already authenticated
+    // You can perform any thing on your resource here!
+
+} catch (error) {
+    if (error instanceof UnAuthenticated) {
+        // Here is not a safe zone. User is unauthenticated.
+    }
+
+    if (error instanceof Aborted) {
+        // Here is weird zone. The Protocol decided to abort
+        // authentication step.
+    }
+
+    // Here is crazy zone. Some thing went wrong! you better throw the
+    // error out for debugging.
+    throw error;
+}
+
+```
+
+### Good news for `Koa`, `Express`, `Socket.IO` and `Yargs` users!
+
+We love `middleware` style! If you are using above frameworks,
+you'll have a very nice place to guard your resources. The mighty `middleware`:
+
+```javascript
+
+    // For example, here we'll wrap the `.authentcate()` method inside a Koa middleware.
+
+    const localAuthentication async (context, next) => {
+        try {
+            let userIdentity = await authenticator.authenticate('local', context.request.body);
+
+            context.identity = userIdentity;
+            await next();
+
+        } catch (error) {
+            if (error instanceof Aborted) {
+                return;
+            }
+            throw error;
+        }
+    }
+```
+
+
+And for your lazy, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth2` and `HttpToken` we have
+`ExpressLocal`,
+`KoaLocal`,
+`SocketIOLocal`,
+`YargsLocal`,
+`KoaOAuth2`,
+`ExpressOAuth2`,
+`KoaToken`,
+`ExpressToken`,
+
+These are framework specific protocols.
+It have ability to `mount` to your framework as a middleware and `guard` its endpoints.
+
+You can replace the above code by simple `authenticator.guard()` method:
+
+```
+// Koa / Express
+// app or router
+app.use(authenticator.guard('local'));
+
+
+// Socket.IO
+// socket or namespace
+socket.use(authenticator.guard('token'));
+
+// Yargs
+yargs.middleware(authenticator.guard('local'));
+```
+
+
+### Good news for users don't find a suitable protocol.
+
+So if you don't think these above protocols are suitable, and you decided to write one for you.
+That's great! Now you are becoming seriously! Please check the CUSTOM PROTOCOL part.
 
 
 # CUSTOM PROTOCOL
 
+TBD
+
 # BEST PRACTICES
 
+TBD
+
 # CONCEPTS
+
+Refer to docs/CONCEPTS_AND_DEFINITIONS
 
 # WORDS FROM AUTHOR
 

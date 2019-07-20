@@ -25,23 +25,6 @@ export interface Protocol {
      * @param context
      */
     resolve(context: Object): Promise<Credential>;
-
-    /**
-     * Interacts with the context when the authentication was failed.
-     *
-     * @param reason
-     * @param context
-     */
-    responseUnAuthenticated(reason: any, context: Object);
-
-    /**
-     * Interacts with the context when the authentication was success.
-     * And we already got the Identity.
-     *
-     * @param identity
-     * @param context
-     */
-    responseAuthenticated(identity: Identity, context: Object);
 }
 
 /**
@@ -78,7 +61,15 @@ export interface Identity {
  */
 export interface StateVerifier {
 
+    /**
+     * Generates the state when the Protocol call the authorize request.
+     */
     makeState(): Promise<string>;
 
+    /**
+     * Determine if the state responded from the OAuth2 server is valid.
+     *
+     * @param stateFromOAuth2Server
+     */
     verify(stateFromOAuth2Server): Promise<boolean>
 }
