@@ -55,6 +55,7 @@ Whatever comes in your `.provide()` is the `Credential`, and whatever comes out 
 - **DO** encrypt the `Credential` whenever you store it. Not only the `user's password`, but also your api `token`!
 
 - **DO** verify the origin of the `Credential` each time you have it!
+
     In the **Local** case, we have the `username` field, so we can query back in our database if we have such `username`.
     It is one way of verifying the origin of the `Credential`.
 
