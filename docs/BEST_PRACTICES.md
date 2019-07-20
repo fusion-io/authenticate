@@ -75,7 +75,7 @@ not checking the `Credential`.
 So if we could not find an `Identity` for some reasons, we'll throw an Error instead of returning some falsy value.
 
 This will help your code more predictable, calling `.authenticate()` and do everything straight forward is better than
-a conditional check. You can also have a central place for handling `UnAuthenticate` error.
+a conditional check. You can also have a central place for handling `UnAuthenticated` error.
 
 Throwing an error will also stop the current execution `context`, that `context` is the actual `Authentication Context` that we
 often mention about, unless you try-catch it.  😩
