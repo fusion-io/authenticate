@@ -5,6 +5,7 @@ Better Authentication for better Geeks.
 
 
 In short, this is an authentication framework for Node.JS
+
 Much like [PassportJS](http://www.passportjs.org/).
 
 # GETTING STARTED
