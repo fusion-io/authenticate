@@ -273,7 +273,8 @@ app.use(authenticator.guard('local'));
 app.use(authenticator.guard('local'));
 // Then you can get the identity by accessing `request.identity`.
 
-// Socket.IO
+// For Socket.IO
+//
 // socket or namespace
 socket.use(authenticator.guard('local'));
 // Then you can get the identity by accessing `socket.identity`.
