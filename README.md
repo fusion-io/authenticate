@@ -59,7 +59,7 @@ into user identity (or user id or something that you can use to distinguish one 
 
 Let's check your shopping cart.
 
-If you are using `Local` protocol. Your Identity Provider should looks like
+If you are using `Local` protocol. Your Identity Provider should look like:
 
 ```javascript
 
@@ -76,7 +76,7 @@ class MyLocalUserProvider {
 }
 ```
 
-If you are using `OAuth2` protocol, your Identity Provider should looks like:
+If you are using `OAuth2` protocol, your Identity Provider should look like:
 
 ```javascript
 
@@ -94,7 +94,7 @@ class MySocialNetworkUserProvider {
 
 ```
 
-If you are using `Token` protocol, your Identity Provider should looks like:
+If you are using `Token` protocol, your Identity Provider should look like:
 
 ```javascript
 
