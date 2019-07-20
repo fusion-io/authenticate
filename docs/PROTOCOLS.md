@@ -90,7 +90,7 @@ interface Mountable {
 
 *You can find other definitions in the [typings file](../typings/auth.d.ts).*
 
-## Implements the interfaces
+## Implementing the interfaces
 
 So you can create a new **Protocol** by implementing the `Protocol` interface like bellow:
 
