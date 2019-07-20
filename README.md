@@ -207,7 +207,7 @@ you'll have a very nice place to guard your resources. The mighty `middleware`:
 
 ```javascript
 
-// For example, here we'll wrap the `.authentcate()` method inside a Koa middleware.
+// For example, here we'll wrap the `.authenticate()` method inside a Koa middleware.
 
 const localAuthentication = async (context, next) => {
     try {
