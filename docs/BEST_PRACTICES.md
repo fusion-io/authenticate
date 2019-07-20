@@ -70,7 +70,8 @@ You can think of your `public key` is `Identity` and `private key` is `Credentia
 
 ## `Error` is not nutrition. Don't swallow it!
 
-We don't have `.authenticate() === false`. In our design concepts, `Authentication` is finding `Identity` by `Credential`.
+We don't have `.authenticate() === false`. In our design concepts, `Authentication` is finding `Identity` by `Credential`,
+not checking the `Credential`.
 So if we could not find an `Identity` for some reasons, we'll throw an Error instead of returning some falsy value.
 
 This will help your code more predictable, calling `.authenticate()` and do everything straight forward is better than
