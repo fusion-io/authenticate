@@ -250,7 +250,8 @@ And for your laziness, we also wrapped it. So beside `HeadlessLocal`, `HttpOAuth
 `KoaToken`,
 `ExpressToken`,
 `SocketIOToken`,
-
+`KoaSession`,
+`ExpressSession`
 
 These are framework specific protocols.
 It have ability to `mount` to your framework as a middleware and `guard` its endpoints.
