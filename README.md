@@ -145,27 +145,7 @@ We supports 3 basic protocols for you:
 [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal), [`HttpOAuth2`](docs/PROTOCOLS.md#httpoauth2) and [`HttpTokenBearer`](docs/PROTOCOLS.md#httptokenbearer)
 . You can replace the above [`HeadlessLocal`](docs/PROTOCOLS.md#headlesslocal) to any one of them.
 
-For more usage of Protocol, please check out the [Protocols documentation](docs/PROTOCOLS.md).
-
-```javascript
-let protocol = new HeadlessLocal();
-
-// or
-const oauth2Options = {
-    clientID: 'your-client-id',
-    clientSecret: 'your-client-secret'
-
-    // optional:
-    scope: ['email'] // List of your oauth2 scopes,
-    state: 'your-state' // can also be an impelemntation of the StateVerifier interface. Please check /typings/auth.d.ts for more about this interface.
-}
-
-let protocol = new HttpOAuth2(options);
-// or
-
-let protocol = new HttpTokenBearer();
-```
-
+*For more usage of Protocol, please check out the [Protocols documentation](docs/PROTOCOLS.md).*
 
 You can have as many gates as you want.
 Just use the `authenticator.gate(gateName, protocol, identityProvider);` to register a new gate.
