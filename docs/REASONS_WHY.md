@@ -1,6 +1,6 @@
 @fusion.io/authenticate
 -----------------------
 
-# REASON WHY WE MOVED OUT OF PASSPORTJS
+# REASON WHY WE LOVE AND LEAVE PASSPORTJS
 
 // TODO

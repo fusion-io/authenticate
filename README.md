@@ -39,7 +39,7 @@ npm install --save @fusion.io/authenticate
 `Hey! hey! What is protocol?`
 
 *If you're asking, a Protocol is just a service that can read the user's authentication
-information (Credential) from your app. Just it!*
+information (`Credential`) from your app. Just it!*
 
 There are variety protocols out there and it is hard to choose!
 But not so many that are widely accepted and adopted.
@@ -63,7 +63,7 @@ This step is just it. No code! Just cheap talk! :D
 `Hey! hey! What is Identity Provider?`
 
 *Again, if you're asking, an Identity Provider is just a service that translates the credential of the above step
-into user identity (or user id or something that you can use to distinguish one user to others).*
+into user's `Identity` (or user id or something that you can use to distinguish one user to others).*
 
 Let's check your shopping cart.
 
@@ -292,10 +292,10 @@ And you also want to support `token` authentication via WebSocket.
 But no matter what the transport layer is, they still returning a `token` as a `Credential`,
 using the same **Identity Provider** in this case will enable you ability to authenticate the same user over multiple transport layers.*
 - In reverse, you can also have many **Identity Providers** that sharing the same **Protocol** when we have more than one **Type Of User**,
-but sharing the same way of authentication (same way of providing **Credential**).
+but sharing the same way of authentication (same way of providing `Credential`).
 
     For example:  *your application may want to authenticate **users** and **organizations** account.
-In both cases, they will provide **email** and **password** as **Credential**.
+In both cases, they will provide **email** and **password** as `Credential`.
 In this case, it will help your code DRY by not providing 2 **Protocols** that are identical to each other.*
 
 # BEST PRACTICES
