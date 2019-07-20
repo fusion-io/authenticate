@@ -1,7 +1,7 @@
 @fusion.io/authenticate
 -----------------------
 
-# CONCEPTS
+# CONCEPTS AND DEFINITIONS
 
 ### tl;dr
 
