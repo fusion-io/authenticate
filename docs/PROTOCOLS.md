@@ -143,7 +143,7 @@ Please use its derived protocols [`KoaToken` and `ExpressToken`](#koatoken-and-e
 
 ## `KoaToken` and `ExpressToken`
 
-Nothing to do with these protocol. You can just grab it and play!
+Nothing to do with these protocols. You can just grab it and play!
 Of course you can use `authenticator.guard()` with these guys.
 
 ## `SocketIOToken`
