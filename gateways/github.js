@@ -36,7 +36,7 @@ exports.createGateway = (framework, options, provider) => {
 
     const Protocol         = 'express' === framework ? ExpressOAuth2 : KoaOAuth2;
     const protocol         = new Protocol(options);
-    const identityProvider = new IdentityProviderChain([new GitHubIDP(options.ua), provider]);
+    const identityProvider = new IdentityProviderChain([new GitHubIDP(options['ua']), provider]);
 
     return new Gateway(protocol, identityProvider);
 };
