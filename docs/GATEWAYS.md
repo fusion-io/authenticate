@@ -1,0 +1,4 @@
+- Facebook: {graphAPIVersion} = 3.3
+- GitHub: {ua} - required (user-agent)
+- JWT: privateKey - required
+-
