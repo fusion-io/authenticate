@@ -306,7 +306,7 @@ out of the box. So you may wants to check out [how to have the `Login via XXX` b
 
 # CUSTOM PROTOCOL
 
-Please checkout how the [document about making a Protocol](docs/PROTOCOLS.md#writing-custom-protocol).
+Please checkout the [document about making a Protocol](docs/PROTOCOLS.md#writing-custom-protocol).
 
 # CONCEPTS AND DEFINITIONS
 
