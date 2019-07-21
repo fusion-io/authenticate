@@ -73,6 +73,9 @@ app.get('/facebook/callback', authenticator.guard('facebook'), (request, respons
         // the identity of the user who logging in
         // by facebook.
         identity: request.identity
+
+        // If you are using Koa, you can access
+        // the identity by ctx.identity, simple right?
     });
 });
 
