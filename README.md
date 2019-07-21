@@ -272,11 +272,11 @@ That's great! Now you are becoming seriously! Please check the [CUSTOM PROTOCOL]
 
 ### Tips:
 
-- **Gate** is a unit of work that combines a protocol and an identity provider together.
+- **Gateway** is a unit of work that combines a protocol and an identity provider together.
 It's the building block of authentication process.
 **Authenticator** is just a service that managing gates. Just it!
 - Relationship between **Protocol** and **IdentityProvider** is many-to-many.
-**Gate** is a pivot representing that relationship.
+**Gateway** is a pivot representing that relationship.
 - You can have many **Protocols** that sharing the same **Identity Provider** if they providing the same `Credential`.
 
     For example: *your application may support `token` authentication via web APIs.
