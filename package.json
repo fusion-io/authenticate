@@ -12,10 +12,12 @@
   "devDependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
     "koa-router": "^7.4.0",
-    "simple-oauth2": "^2.2.1"
+    "simple-oauth2": "^2.2.1",
+    "socket.io": "^2.2.0"
   },
   "dependencies": {
     "request": "^2.88.0"
