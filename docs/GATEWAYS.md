@@ -1,4 +1,5 @@
 - Facebook: {graphAPIVersion} = 3.3
 - GitHub: {ua} - required (user-agent)
 - JWT: privateKey - required
-- Google: {scope = 'openid email'} - required.
+- Google: { scope = 'openid email' } - required.
+- Slack: { scope = 'identity.basic' } - required. Also returning { team }
