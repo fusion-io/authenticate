@@ -25,7 +25,6 @@ For further topics, please checkout:
 - [Some best practices about authentications](docs/BEST_PRACTICES.md).
 - [Document about making a Protocol](docs/PROTOCOLS.md#writing-custom-protocol).
 - [Our core concepts when building this package](docs/CONCEPTS_AND_DEFINITIONS.md).
-- [Reasons why](docs/REASONS_WHY.md) we love and leave [PassportJS](http://www.passportjs.org/).
 
 
 ## Installation
