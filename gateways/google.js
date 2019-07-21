@@ -31,7 +31,7 @@ class GoogleIDP {
 exports.createGateway = (framework, options, provider) => {
 
     if (!['express', 'koa'].includes(framework)) {
-        throw new Error(`GitHub gateway does not support framework [${framework}]`);
+        throw new Error(`Google gateway does not support framework [${framework}]`);
     }
 
     options = { ...options, tokenPath: 'https://oauth2.googleapis.com/token', host: 'https://accounts.google.com', path: '/o/oauth2/v2/auth' };
