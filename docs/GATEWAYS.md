@@ -3,3 +3,4 @@
 - JWT: privateKey - required
 - Google: { scope = 'openid email' } - required.
 - Slack: { scope = 'identity.basic' } - required. Also returning { team }
+- Twitter: - using oauth-1.0a signature.
