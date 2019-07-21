@@ -45,9 +45,9 @@ class Twitter3LeggedAuthorizationProtocol {
                 form: request.data
             });
 
-            console.log(response);
+            // TODO
         } catch (e) {
-            console.log(e);
+            // TODO
         }
     }
 
