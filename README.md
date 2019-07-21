@@ -312,9 +312,3 @@ Please checkout how the [document about making a Protocol](docs/PROTOCOLS.md#wri
 # CONCEPTS AND DEFINITIONS
 
 Please check out [our concepts](docs/CONCEPTS_AND_DEFINITIONS.md) when building this package.
-
-# WORDS FROM AUTHOR
-
-First of all, we love [PassportJS](http://www.passportjs.org/).!
-
-[Here are the reasons](docs/REASONS_WHY.md) why we moved out of the PassportJS and decided to create this package.
