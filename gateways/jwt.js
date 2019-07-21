@@ -1,15 +1,15 @@
-const UnAuthenticated = require('../UnAuthenticated');
-const Gateway         = require('../Gateway');
-const HttpTokenBearer = require('../Protocols/HttpTokenBearer');
-const SocketIOTOken   = require('../Protocols/SocketIOToken');
-const IDPChain        = require('../IdentityProviderChain');
-const {
-    mountExpress,
-    mountKoa
-}                     = require('../utils');
 const jwt             = require('jsonwebtoken');
 const util            = require('util');
 const verifyJWT       = util.promisify(jwt.verify);
+
+const {
+    UnAuthenticated,
+    Gateway,
+    SocketIOToken,
+    IdentityProviderChain,
+    KoaToken,
+    ExpressToken
+} = require('../index');
 
 /**
  * @implements IdentityProvider
@@ -38,14 +38,14 @@ exports.createGateway = (framework, privateKey, provider) => {
     let Protocol = null;
 
     if ('koa' === framework) {
-        Protocol = mountKoa()(HttpTokenBearer);
+        Protocol = KoaToken;
     } else if ('express' === framework) {
-        Protocol = mountExpress()(HttpTokenBearer);
+        Protocol = ExpressToken;
     } else {
-        Protocol = SocketIOTOken;
+        Protocol = SocketIOToken;
     }
 
-    return new Gateway(new Protocol(), new IDPChain([new JWTIdentityProvider(privateKey), provider]))
+    return new Gateway(new Protocol(), new IdentityProviderChain([new JWTIdentityProvider(privateKey), provider]))
 };
 
 exports.createExpressGateway = (privateKey, provider) => {

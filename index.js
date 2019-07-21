@@ -2,7 +2,8 @@ const Authenticator     = require('./lib/Authenticator');
 const {
     mountExpress,
     mountKoa,
-    mountSocketIO
+    mountSocketIO,
+    callAPI
 }                       = require('./lib/utils');
 
 const HeadlessLocal     = require('./lib/Protocols/HeadlessLocal');
@@ -16,10 +17,16 @@ exports.Authenticator   = Authenticator;
 
 exports.authenticator   = new Authenticator();
 
+// Identity Provider chain
+exports.IdentityProviderChain = require('./lib/IdentityProviderChain');
+
 // Mounting decorators
 exports.mountExpress    = mountExpress;
 exports.mountKoa        = mountKoa;
 exports.mountSocketIO   = mountSocketIO;
+
+// Other utils
+exports.callAPI         = callAPI;
 
 // Basic protocols
 exports.HeadlessLocal   = HeadlessLocal;

@@ -1,7 +1,10 @@
-const HttpOAuth2 = require('../Protocols/HttpOAuth2');
-const Gateway    = require('../Gateway');
-const utils      = require('../utils');
-const IDPChain   = require('../IdentityProviderChain');
+const {
+    ExpressOAuth2,
+    KoaOAuth2,
+    Gateway,
+    IdentityProviderChain,
+    callAPI
+} = require('../index');
 
 /**
  * @implements IdentityProvider
@@ -13,7 +16,7 @@ class FacebookIdentityProvider {
     }
 
     async provide({access_token}) {
-        let profile = await utils.callAPI({
+        let profile = await callAPI({
             url: `https://graph.facebook.com/v${this.graphAPIVersion}/me`,
             qs: {access_token},
         });
@@ -29,10 +32,9 @@ exports.createGateway = (framework, options, provider) => {
 
     options = { ...options, host: 'https://graph.facebook.com' };
 
-    const mounter          = ('express' === framework) ? utils.mountExpress() : utils.mountKoa();
-    const Protocol         = mounter(HttpOAuth2);
+    const Protocol         = 'express' === framework ? ExpressOAuth2 : KoaOAuth2;
     const protocol         = new Protocol(options);
-    const identityProvider = new IDPChain([new FacebookIdentityProvider(options['graphAPIVersion'] || '3.3'), provider]);
+    const identityProvider = new IdentityProviderChain([new FacebookIdentityProvider(options['graphAPIVersion'] || '3.3'), provider]);
 
     return new Gateway(protocol, identityProvider);
 };
@@ -56,4 +58,3 @@ exports.createExpressGateway = (options, provider) => {
 exports.createKoaGateway = (options, provider) => {
     return exports.createGateway('koa', options, provider);
 };
-
