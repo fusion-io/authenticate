@@ -10,6 +10,8 @@ Much like [PassportJS](http://www.passportjs.org/).  😛
 
 # GETTING STARTED
 
+*For quick and dirty and lazy work with this package. Please check our [supported Gateways](docs/GATEWAYS.md)*
+
 To get start, please follow these steps:
 
 1. [Installation](#installation).
@@ -88,7 +90,7 @@ If you are using `OAuth2` protocol, your Identity Provider should look like:
 
 ```javascript
 
-class MySocialNetworkUserProvider {
+class MyOAuth2kUserProvider {
 
     async provide({access_token}) {
         // Here you can use the access_token to ask
@@ -288,9 +290,20 @@ but sharing the same way of authentication (same way of providing `Credential`).
 In both cases, they will provide **email** and **password** as `Credential`.
 Using the same **Protocol** will help your code DRY by not providing 2 **Protocols** that are identical to each other.*
 
+
 # BEST PRACTICES
 
 Please checkout some [best practices](docs/BEST_PRACTICES.md) about authentication.
+
+# FOR YOUR LAZINESS:
+
+We ship some common social authentication services:
+`Facebook`,
+`Google`,
+`Instagram`,
+`Slack`,
+`GitHub`
+out of the box. So you may wants to check out [how to have the `Login via XXX` button](docs/GATEWAYS.md).
 
 # CUSTOM PROTOCOL
 
