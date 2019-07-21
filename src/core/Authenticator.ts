@@ -1,34 +1,33 @@
-const Gateway = require('./Gateway');
+import {IdentityProvider, Mountable, Protocol} from "./Contracts";
+import Gateway from "./Gateway";
 
 /**
  * An authenticator service. It its simplest form, it managing
  * gateways.
  */
-class Authenticator {
-    
-    constructor() {
-        this.gateways = new Map();
-    }
+export default class Authenticator {
+
+    private gateways: Map<string, Gateway> = new Map<string, Gateway>();
 
     /**
+     * Register an existing gateway
      *
      * @param gateName
      * @param gateInstance
-     * @return {Authenticator}
      */
-    register(gateName, gateInstance) {
+    public register(gateName: string, gateInstance: Gateway) {
         this.gateways.set(gateName, gateInstance);
         return this;
     }
 
     /**
+     * Create a new gateway
      *
      * @param gateway
      * @param protocol
      * @param provider
-     * @return {Authenticator}
      */
-    gate(gateway, protocol, provider) {
+    public gate(gateway: string, protocol: Protocol, provider: IdentityProvider) {
         return this.register(gateway, new Gateway(protocol, provider));
     }
 
@@ -37,10 +36,9 @@ class Authenticator {
      *
      * @param gateway
      * @param context
-     * @return {Promise<void>}
      */
-    authenticate(gateway, context) {
-        return this.gateways.get(gateway).authenticate(context);
+    public authenticate(gateway: string, context: Object) {
+        return this.getOrFail(gateway).authenticate(context);
     }
 
     /**
@@ -56,18 +54,32 @@ class Authenticator {
      * @param gateway
      * @return {mount}
      */
-    guard(gateway) {
-        const protocol = this.gateways.get(gateway).protocol;
-        if ('function' !== typeof protocol.mount) {
+    public guard(gateway: string) {
+        const protocol = this.getOrFail(gateway).protocol;
+
+        if ('function' !== typeof (protocol as Mountable).mount) {
             throw new Error(
                 `The protocol [${protocol.constructor.name}] of the gateway [${gateway}]` +
                 ` does not support mounting to a framework.`
             );
         }
-        return this.gateways.get(gateway).protocol.mount((context => {
+        return (protocol as Mountable).mount((context: Object) => {
             return this.authenticate(gateway, context);
-        }));
+        });
+    }
+
+    /**
+     * Get a gateway by its name.
+     *
+     * @param gateway
+     */
+    protected getOrFail(gateway: string): Gateway {
+        const gatewayInstance = this.gateways.get(gateway);
+
+        if (!gatewayInstance) {
+            throw new Error(`Gateway [${gateway}] is not registered.`);
+        }
+
+        return gatewayInstance;
     }
 }
-
-module.exports = Authenticator;

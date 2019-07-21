@@ -1,13 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("../core");
-const querystring_1 = __importDefault(require("querystring"));
-const request_1 = __importDefault(require("request"));
-const util_1 = __importDefault(require("util"));
-const callAPI = util_1.default.promisify(request_1.default);
+import {StateVerifier, Aborted, UnAuthenticated, Protocol} from "../core";
+import querystring from 'querystring';
+import request from "request";
+import util from "util";
+import {HttpContext} from "./Contracts";
+
+const callAPI = util.promisify(request);
+
 /**
  * Default scope verifier.
  * It will compare the configured scope and the scope
@@ -15,86 +13,110 @@ const callAPI = util_1.default.promisify(request_1.default);
  *
  * @implements StateVerifier
  */
-class SillyStateVerifier {
-    constructor(state) {
-        this.state = state;
+class SillyStateVerifier implements StateVerifier {
+
+    constructor(private state: string) {
+
     }
-    async makeState() {
+
+    public async makeState() {
         return this.state;
     }
-    async verify(stateFromOAuth2Server) {
+
+    public async verify(stateFromOAuth2Server: string) {
         return stateFromOAuth2Server === this.state.toString();
     }
 }
+
 /**
  * This protocol supports the code grant flow.
  *
  * @implements Protocol
  */
-class HttpOAuth2 {
+export default class HttpOAuth2 implements Protocol {
+
+    private readonly stateVerifier?: StateVerifier;
+
     /**
      *
      * @param options
      * @return {HttpOAuth2}
      */
-    constructor(options) {
-        this.options = options;
+    constructor(private options: any) {
+
         if (!this.options.state) {
             return this;
         }
+
         // If we got the state configuration. We'll add a state verifier
         // for it.
         this.stateVerifier = ('string' === typeof this.options.state) ?
+
             // If the state is just a plain string.
             // We'll use the silly verifier.
             new SillyStateVerifier(this.options.state) :
+
             // Otherwise, considered as the user will use their own
             // verifier.
-            this.options.state;
+            this.options.state
+        ;
+
         return this;
     }
+
     /**
      * Redirects to the Authorize endpoint to start get the granted code.
      *
      * @param response
      * @return {Promise<void>}
      */
-    async redirectToAuthorizeEndpoint({ httpContext: { response } }) {
+    public async redirectToAuthorizeEndpoint({httpContext: {response}}: {httpContext: HttpContext}) {
+
         let { host, path, clientId, redirectUri, scope } = this.options;
-        const qs = {
+
+        const qs: any = {
             response_type: 'code',
             client_id: clientId,
             redirect_uri: redirectUri
         };
+
         if (scope) {
             qs['scope'] = scope instanceof Array ? scope.join(',') : scope;
         }
+
         // If the state is configured. We'll ask the verifier make a state for us.
         if (this.stateVerifier) {
             qs['state'] = await this.stateVerifier.makeState();
         }
+
         if (!path) {
             path = '/oauth2/authorize';
         }
-        const authorizeUri = `${host}${path}?${querystring_1.default.stringify(qs)}`;
+
+        const authorizeUri = `${host}${path}?${querystring.stringify(qs)}`;
+
         response.redirect(authorizeUri);
+
         // After we redirect. We'll abort this authentication context.
         // The actual authentication is the resolveAccessToken.
-        throw new core_1.Aborted("Aborted");
+        throw new Aborted("Aborted");
     }
+
     /**
      * Handle redirected from the OAuth2 server to exchange granted code to access_token.
      *
      * @param request
      * @return {Promise<*>}
      */
-    async resolveAccessToken({ httpContext: { request } }) {
+    public async resolveAccessToken({httpContext: {request}}: {httpContext: HttpContext}) {
         const code = request.query['code'];
+
         // If the state is configured. We'll ask the verifier to verify if the state
         // is the actual one it sent before.
         if (this.stateVerifier && !await this.stateVerifier.verify(request.query['state'])) {
-            throw new core_1.UnAuthenticated(`OAuth2 state [${request.query['state']}] is invalid`);
+            throw new UnAuthenticated(`OAuth2 state [${request.query['state']}] is invalid`);
         }
+
         const form = {
             client_id: this.options.clientId,
             client_secret: this.options.clientSecret,
@@ -102,7 +124,9 @@ class HttpOAuth2 {
             code,
             grant_type: 'authorization_code'
         };
+
         const tokenPath = this.options['tokenPath'] || `${this.options.host}/oauth/access_token`;
+
         // @ts-ignore
         const response = await callAPI({
             url: tokenPath,
@@ -110,25 +134,30 @@ class HttpOAuth2 {
             form,
             json: true
         });
+
         const responseAsJson = response.toJSON();
+
         if (response.statusCode >= 300) {
-            throw new core_1.UnAuthenticated(`OAuth2 Server Error. Response from server: ${JSON.stringify(responseAsJson.body)}`);
+            throw new UnAuthenticated(`OAuth2 Server Error. Response from server: ${JSON.stringify(responseAsJson.body)}`);
         }
+
         return responseAsJson.body;
     }
+
     /**
      *
      * @param context
      * @return {Promise<*>}
      */
-    async resolve(context) {
+    public async resolve(context: {httpContext: HttpContext}) {
         return context.httpContext.request.query['code'] ?
             // If there was a code. We'll exchange it to get the
             // access_token.
             await this.resolveAccessToken(context) :
+
             // If no code in the query string. We'll redirect to the OAuth2 server
             // to get one.
-            await this.redirectToAuthorizeEndpoint(context);
+            await this.redirectToAuthorizeEndpoint(context)
+        ;
     }
 }
-exports.default = HttpOAuth2;

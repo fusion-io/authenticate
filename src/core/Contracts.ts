@@ -2,7 +2,7 @@
  * A callback function that consumes the context,
  * runs the authentication and returns the Identity.
  */
-interface ContextConsumer { (context): Promise<Identity> }
+export interface ContextConsumer { (context: Object): Promise<Identity> }
 
 /**
  * In the most cases, the protocol by itself can resolve
@@ -28,6 +28,11 @@ export interface Protocol {
 }
 
 /**
+ * Define abstract type.
+ */
+export type MountableProtocol = Protocol | Mountable;
+
+/**
  * The service that will find an Identity satisfied the given Credential.
  */
 export interface IdentityProvider {
@@ -38,7 +43,7 @@ export interface IdentityProvider {
      *
      * @param credential
      */
-    provide(credential: Credential): Promise<Identity>;
+    provide(credential: Credential): Promise<Identity|null>;
 }
 
 /**
@@ -71,5 +76,5 @@ export interface StateVerifier {
      *
      * @param stateFromOAuth2Server
      */
-    verify(stateFromOAuth2Server): Promise<boolean>
+    verify(stateFromOAuth2Server: Object): Promise<boolean>
 }

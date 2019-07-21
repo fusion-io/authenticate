@@ -1,10 +1,5 @@
-const {
-    ExpressOAuth2,
-    KoaOAuth2,
-    Gateway,
-    IdentityProviderChain,
-    UnAuthenticated
-} = require('../index');
+import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
+import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
 
 const jwt = require('jsonwebtoken');
 

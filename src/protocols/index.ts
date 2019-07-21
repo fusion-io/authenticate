@@ -1,32 +1,24 @@
-const request    = require("request");
-const util       = require("util");
-const Aborted    = require('./Aborted');
+import {ContextConsumer, Aborted} from "../core";
+import HeadlessLocal from "./HeadlessLocal";
+import HttpOAuth2 from "./HttpOAuth2";
+import HttpSession from "./HttpSession";
+import HttpTokenBearer from "./HttpTokenBearer";
+import SocketIOToken from "./SocketIOToken";
+import util from "util";
+import request from "request";
 
-const callAPI    = util.promisify(request);
-
-/**
- * A helper to call API for some 3rd party OAuth service providers.
- *
- * @param options
- * @return {Promise<*>}
- */
-exports.callAPI  = async options => {
-    let response = await callAPI(options);
-
-    if (response.statusCode >= 300) {
-        throw new Error(`Http Error with status code [${response.statusCode}]: ${response.body}`);
-    }
-
-    return JSON.parse(response.body);
+export {
+    HeadlessLocal,
+    HttpOAuth2,
+    HttpSession,
+    HttpTokenBearer,
+    SocketIOToken
 };
 
-/**
- * Extends protocol for mounting to express endpoint
- */
-exports.mountExpress = () => Protocol => {
+export const mountExpress = () => (Protocol: any) => {
     return class extends Protocol {
-        mount(consumer) {
-            return (request, response, next) => {
+        mount(consumer: ContextConsumer) {
+            return (request: any, response: any, next: Function) => {
                 consumer({ ...request.body, context: 'http', httpContext: { request, response } })
                     .then(identity => {
                         request.identity = identity;
@@ -45,14 +37,10 @@ exports.mountExpress = () => Protocol => {
         }
     }
 };
-
-/**
- * Extends protocol for mounting to koa endpoint
- */
-exports.mountKoa = () => Protocol => {
+export const mountKoa = () => (Protocol: any) => {
     return class extends Protocol {
-        mount(consumer) {
-            return (ctx, next) => consumer({
+        mount(consumer: ContextConsumer) {
+            return (ctx: any, next: Function) => consumer({
                 ...ctx.request.body,
                 context: 'http',
                 httpContext: ctx
@@ -68,15 +56,10 @@ exports.mountKoa = () => Protocol => {
         }
     }
 };
-
-
-/**
- * Extends protocol for mounting to a Socket.IO channel
- */
-exports.mountSocketIO = () => Protocol => {
+export const mountSocketIO = () => (Protocol: any) => {
     return class extends Protocol {
-        mount(consumer) {
-            return (socket, next) => consumer({
+        mount(consumer: ContextConsumer) {
+            return (socket: any, next: Function) => consumer({
                 context: 'socket',
                 ...socket.handshake.query,
                 socketContext: socket
@@ -89,3 +72,8 @@ exports.mountSocketIO = () => Protocol => {
         }
     }
 };
+
+export const ExpressOAuth2  = mountExpress()(HttpOAuth2);
+export const KoaOAuth2      = mountKoa()(HttpOAuth2);
+export const callAPI        = util.promisify(request);
+

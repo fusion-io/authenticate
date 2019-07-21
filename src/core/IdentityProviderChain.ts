@@ -3,14 +3,16 @@
  *
  * @implements IdentityProvider
  */
-class IdentityProviderChain {
+import {Credential, IdentityProvider} from "./Contracts";
+
+export default class IdentityProviderChain implements IdentityProvider {
 
     /**
      *
      * @param {IdentityProvider[]} chains
      */
-    constructor(chains = []) {
-        this.chains = chains;
+    constructor(private chains: Array<IdentityProvider> = []) {
+
     }
 
     /**
@@ -18,11 +20,14 @@ class IdentityProviderChain {
      * @param credential
      * @return {Promise<*>}
      */
-    async provide(credential) {
-        let identityChain = credential;
+    public async provide(credential: Credential) {
+        let identityChain: any = credential;
 
         for (let index = 0; index < this.chains.length; index++) {
-            identityChain = await this.chains[index].provide(identityChain);
+
+            const idp: IdentityProvider = this.chains[index];
+
+            identityChain = await idp.provide(identityChain);
 
             if (!identityChain) {
                 return null;
@@ -32,5 +37,3 @@ class IdentityProviderChain {
         return identityChain;
     }
 }
-
-module.exports = IdentityProviderChain;

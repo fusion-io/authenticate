@@ -1,24 +1,21 @@
-const {
-    ExpressOAuth2,
-    KoaOAuth2,
-    Gateway,
-    IdentityProviderChain,
-    callAPI
-} = require('../index');
+import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
+import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
 
 /**
  * @implements IdentityProvider
  */
-class FacebookIdentityProvider {
-
-    constructor(graphAPIVersion = '3.3') {
-        this.graphAPIVersion = graphAPIVersion;
+class GitHubIDP {
+    constructor(ua) {
+        this.ua = ua;
     }
 
     async provide({access_token}) {
         let profile = await callAPI({
-            url: `https://graph.facebook.com/v${this.graphAPIVersion}/me`,
+            url: 'https://api.github.com/user',
             qs: {access_token},
+            headers: {
+                'user-agent': this.ua
+            }
         });
         return { access_token, profile };
     }
@@ -27,14 +24,14 @@ class FacebookIdentityProvider {
 exports.createGateway = (framework, options, provider) => {
 
     if (!['express', 'koa'].includes(framework)) {
-        throw new Error(`Facebook gateway does not support framework [${framework}]`);
+        throw new Error(`GitHub gateway does not support framework [${framework}]`);
     }
 
-    options = { ...options, host: 'https://graph.facebook.com' };
+    options = { ...options, host: 'https://github.com/login' };
 
     const Protocol         = 'express' === framework ? ExpressOAuth2 : KoaOAuth2;
     const protocol         = new Protocol(options);
-    const identityProvider = new IdentityProviderChain([new FacebookIdentityProvider(options['graphAPIVersion'] || '3.3'), provider]);
+    const identityProvider = new IdentityProviderChain([new GitHubIDP(options['ua']), provider]);
 
     return new Gateway(protocol, identityProvider);
 };

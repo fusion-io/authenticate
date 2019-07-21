@@ -1,9 +1,5 @@
-const {
-    ExpressOAuth2,
-    KoaOAuth2,
-    Gateway,
-    IdentityProviderChain
-} = require('../index');
+import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
+import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
 
 /**
  * @implements IdentityProvider
