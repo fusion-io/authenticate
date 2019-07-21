@@ -1,17 +1,22 @@
 import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
-import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
+import {ExpressOAuth2, KoaOAuth2} from "../protocols";
+
+declare type Credential = {
+    access_token: string,
+    user: string
+}
 
 /**
  * @implements IdentityProvider
  */
-class InstagramIDP {
-    async provide({access_token, user}) {
+class InstagramIDP implements IdentityProvider {
+    async provide({access_token, user}: Credential) {
 
         return { access_token, profile: user };
     }
 }
 
-exports.createGateway = (framework, options, provider) => {
+exports.createGateway = (framework: string, options: any, provider: IdentityProvider) => {
 
     if (!['express', 'koa'].includes(framework)) {
         throw new Error(`Instagram gateway does not support framework [${framework}]`);
@@ -32,7 +37,7 @@ exports.createGateway = (framework, options, provider) => {
  * @param {IdentityProvider} provider
  * @return {Gateway}
  */
-exports.createExpressGateway = (options, provider) => {
+exports.createExpressGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('express', options, provider);
 };
 
@@ -42,6 +47,6 @@ exports.createExpressGateway = (options, provider) => {
  * @param provider
  * @return {Gateway}
  */
-exports.createKoaGateway = (options, provider) => {
+exports.createKoaGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('koa', options, provider);
 };

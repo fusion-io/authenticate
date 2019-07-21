@@ -1,20 +1,22 @@
-const {
-    ExpressOAuth2,
-    KoaOAuth2,
-    Gateway,
-    IdentityProviderChain,
-} = require('../index');
+import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
+import {ExpressOAuth2, KoaOAuth2} from "../protocols";
+
+declare type Credential = {
+    access_token: string,
+    user: Object,
+    team: Object
+}
 
 /**
  * @implements IdentityProvider
  */
-class SlackIDP {
-    async provide({ access_token, user, team }) {
+class SlackIDP implements IdentityProvider {
+    async provide({ access_token, user, team }: Credential) {
         return { access_token, profile: user,  team } ;
     }
 }
 
-exports.createGateway = (framework, options, provider) => {
+exports.createGateway = (framework: string, options: any, provider: IdentityProvider) => {
 
     if (!['express', 'koa'].includes(framework)) {
         throw new Error(`Slack gateway does not support framework [${framework}]`);
@@ -40,7 +42,7 @@ exports.createGateway = (framework, options, provider) => {
  * @param {IdentityProvider} provider
  * @return {Gateway}
  */
-exports.createExpressGateway = (options, provider) => {
+exports.createExpressGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('express', options, provider);
 };
 
@@ -50,6 +52,6 @@ exports.createExpressGateway = (options, provider) => {
  * @param provider
  * @return {Gateway}
  */
-exports.createKoaGateway = (options, provider) => {
+exports.createKoaGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('koa', options, provider);
 };

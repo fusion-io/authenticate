@@ -1,6 +1,11 @@
 import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
 import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
 
+declare type Credential = {
+    access_token: string
+};
+
+
 /**
  * @implements IdentityProvider
  */
@@ -9,8 +14,7 @@ class FacebookIdentityProvider implements IdentityProvider {
     constructor(private readonly graphAPIVersion = '3.3') {
     }
 
-    public async provide({access_token}: {access_token: string}) {
-        // @ts-ignore
+    public async provide({access_token}: Credential) {
         let profile = await callAPI({
             url: `https://graph.facebook.com/v${this.graphAPIVersion}/me`,
             qs: {access_token},

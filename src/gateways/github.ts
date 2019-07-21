@@ -1,15 +1,18 @@
 import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
 import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
 
+declare type Credential = {
+    access_token: string
+};
+
 /**
  * @implements IdentityProvider
  */
-class GitHubIDP {
-    constructor(ua) {
-        this.ua = ua;
+class GitHubIDP implements IdentityProvider {
+    constructor(private readonly ua: string) {
     }
 
-    async provide({access_token}) {
+    async provide({access_token}: Credential) {
         let profile = await callAPI({
             url: 'https://api.github.com/user',
             qs: {access_token},
@@ -21,7 +24,7 @@ class GitHubIDP {
     }
 }
 
-exports.createGateway = (framework, options, provider) => {
+exports.createGateway = (framework: string, options: any, provider: IdentityProvider) => {
 
     if (!['express', 'koa'].includes(framework)) {
         throw new Error(`GitHub gateway does not support framework [${framework}]`);
@@ -42,7 +45,7 @@ exports.createGateway = (framework, options, provider) => {
  * @param {IdentityProvider} provider
  * @return {Gateway}
  */
-exports.createExpressGateway = (options, provider) => {
+exports.createExpressGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('express', options, provider);
 };
 
@@ -52,6 +55,6 @@ exports.createExpressGateway = (options, provider) => {
  * @param provider
  * @return {Gateway}
  */
-exports.createKoaGateway = (options, provider) => {
+exports.createKoaGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('koa', options, provider);
 };

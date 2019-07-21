@@ -1,20 +1,23 @@
-import {Gateway, IdentityProvider, IdentityProviderChain} from "../core";
-import {ExpressOAuth2, KoaOAuth2, callAPI} from "../protocols";
+import {Gateway, IdentityProvider, IdentityProviderChain, UnAuthenticated} from "../core";
+import {ExpressOAuth2, KoaOAuth2} from "../protocols";
+import jwt, {DecodeOptions} from "jsonwebtoken";
 
-const jwt = require('jsonwebtoken');
+declare type Credential = {
+    access_token: string,
+    id_token: string
+}
 
 /**
  * @implements IdentityProvider
  */
-class GoogleIDP {
-    constructor(clientSecret) {
-        this.clientSecret = clientSecret;
+class GoogleIDP implements IdentityProvider {
+    constructor(private readonly clientSecret: string) {
     }
 
-    async provide({access_token, id_token}) {
+    async provide({access_token, id_token}: Credential) {
 
         try {
-            const profile = jwt.decode(id_token, this.clientSecret);
+            const profile = jwt.decode(id_token, (this.clientSecret as DecodeOptions));
 
             return { access_token, id_token, profile };
         } catch (error) {
@@ -23,7 +26,7 @@ class GoogleIDP {
     }
 }
 
-exports.createGateway = (framework, options, provider) => {
+exports.createGateway = (framework: string, options: any, provider: IdentityProvider) => {
 
     if (!['express', 'koa'].includes(framework)) {
         throw new Error(`Google gateway does not support framework [${framework}]`);
@@ -44,7 +47,7 @@ exports.createGateway = (framework, options, provider) => {
  * @param {IdentityProvider} provider
  * @return {Gateway}
  */
-exports.createExpressGateway = (options, provider) => {
+exports.createExpressGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('express', options, provider);
 };
 
@@ -54,6 +57,6 @@ exports.createExpressGateway = (options, provider) => {
  * @param provider
  * @return {Gateway}
  */
-exports.createKoaGateway = (options, provider) => {
+exports.createKoaGateway = (options: any, provider: IdentityProvider) => {
     return exports.createGateway('koa', options, provider);
 };

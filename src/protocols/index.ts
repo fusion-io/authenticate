@@ -6,6 +6,7 @@ import HttpTokenBearer from "./HttpTokenBearer";
 import SocketIOToken from "./SocketIOToken";
 import util from "util";
 import request from "request";
+import {mountExpress, mountKoa, mountSocketIO} from "./decorators";
 
 export {
     HeadlessLocal,
@@ -15,65 +16,16 @@ export {
     SocketIOToken
 };
 
-export const mountExpress = () => (Protocol: any) => {
-    return class extends Protocol {
-        mount(consumer: ContextConsumer) {
-            return (request: any, response: any, next: Function) => {
-                consumer({ ...request.body, context: 'http', httpContext: { request, response } })
-                    .then(identity => {
-                        request.identity = identity;
-                        next();
-                    })
-                    .catch(error => {
-                        // If authentication aborted. We'll just skip this route.
-                        if (error instanceof Aborted) {
-                            return null;
-                        }
+export const callAPI        = (options: any) => util.promisify(request)(options, undefined);
+export const KoaLocal       = mountKoa(HeadlessLocal);
+export const ExpressLocal   = mountExpress(HeadlessLocal);
+export const SocketIOLocal  = mountSocketIO(HeadlessLocal);
 
-                        next(error);
-                    })
-                ;
-            };
-        }
-    }
-};
-export const mountKoa = () => (Protocol: any) => {
-    return class extends Protocol {
-        mount(consumer: ContextConsumer) {
-            return (ctx: any, next: Function) => consumer({
-                ...ctx.request.body,
-                context: 'http',
-                httpContext: ctx
-            }).then(identity => {
-                ctx.identity = identity;
-                return next();
-            }).catch(error => {
-                // If authentication aborted. We'll just skip this route.
-                if (!(error instanceof Aborted)) {
-                    throw error;
-                }
-            });
-        }
-    }
-};
-export const mountSocketIO = () => (Protocol: any) => {
-    return class extends Protocol {
-        mount(consumer: ContextConsumer) {
-            return (socket: any, next: Function) => consumer({
-                context: 'socket',
-                ...socket.handshake.query,
-                socketContext: socket
-            }).then(identity => {
-                socket.identity = identity;
-                next();
-            }).catch((error) => {
-                next(error);
-            });
-        }
-    }
-};
+export const KoaOAuth2      = mountKoa(HttpOAuth2);
+export const ExpressOAuth2  = mountExpress(HttpOAuth2);
 
-export const ExpressOAuth2  = mountExpress()(HttpOAuth2);
-export const KoaOAuth2      = mountKoa()(HttpOAuth2);
-export const callAPI        = util.promisify(request);
+export const KoaToken       = mountKoa(HttpTokenBearer);
+export const ExpressToken   = mountExpress(HttpTokenBearer);
 
+export const KoaSession     = mountKoa(HttpSession);
+export const ExpressSession = mountExpress(HttpSession);
