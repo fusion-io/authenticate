@@ -35,7 +35,7 @@ class JWTIdentityProvider implements IdentityProvider {
     }
 }
 
-exports.createGateway = (framework: string, privateKey: string, provider: IdentityProvider) => {
+export const createGateway = (framework: string, privateKey: string, provider: IdentityProvider) => {
     if (!['socket.io', 'koa', 'express'].includes(framework)) {
         throw new Error(`JWT gateway does not support framework [${framework}]`);
     }
@@ -53,14 +53,14 @@ exports.createGateway = (framework: string, privateKey: string, provider: Identi
     return new Gateway(new Protocol(), new IdentityProviderChain([new JWTIdentityProvider(privateKey), provider]))
 };
 
-exports.createExpressGateway = (privateKey: string, provider: IdentityProvider) => {
-    return exports.createGateway('express', privateKey, provider);
+export const createExpressGateway = (privateKey: string, provider: IdentityProvider) => {
+    return createGateway('express', privateKey, provider);
 };
 
-exports.createKoaGateway = (privateKey: string, provider: IdentityProvider) => {
-    return exports.createGateway('koa', privateKey, provider);
+export const createKoaGateway = (privateKey: string, provider: IdentityProvider) => {
+    return createGateway('koa', privateKey, provider);
 };
 
-exports.createSocketIOGateway = (privateKey: string, provider: IdentityProvider) => {
-    return exports.createGateway('socket.io', privateKey, provider);
+export const createSocketIOGateway = (privateKey: string, provider: IdentityProvider) => {
+    return createGateway('socket.io', privateKey, provider);
 };

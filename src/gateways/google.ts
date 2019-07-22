@@ -26,7 +26,7 @@ class GoogleIDP implements IdentityProvider {
     }
 }
 
-exports.createGateway = (framework: string, options: any, provider: IdentityProvider) => {
+export const createGateway = (framework: string, options: any, provider: IdentityProvider) => {
 
     if (!['express', 'koa'].includes(framework)) {
         throw new Error(`Google gateway does not support framework [${framework}]`);
@@ -47,8 +47,8 @@ exports.createGateway = (framework: string, options: any, provider: IdentityProv
  * @param {IdentityProvider} provider
  * @return {Gateway}
  */
-exports.createExpressGateway = (options: any, provider: IdentityProvider) => {
-    return exports.createGateway('express', options, provider);
+export const createExpressGateway = (options: any, provider: IdentityProvider) => {
+    return createGateway('express', options, provider);
 };
 
 /**
@@ -57,6 +57,6 @@ exports.createExpressGateway = (options: any, provider: IdentityProvider) => {
  * @param provider
  * @return {Gateway}
  */
-exports.createKoaGateway = (options: any, provider: IdentityProvider) => {
-    return exports.createGateway('koa', options, provider);
+export const createKoaGateway = (options: any, provider: IdentityProvider) => {
+    return createGateway('koa', options, provider);
 };
