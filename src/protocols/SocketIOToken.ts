@@ -1,7 +1,5 @@
-import {ContextConsumer, Mountable, Protocol} from "../core";
+import {ContextConsumer, Mountable, Protocol, UnAuthenticated} from "../core";
 import {SocketContext} from "./Contracts";
-
-const UnAuthenticated = require('./../UnAuthenticated');
 
 /**
  * @implements Protocol

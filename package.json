@@ -19,6 +19,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-numeric-separator": "^7.2.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@types/express": "^4.17.0",
@@ -33,6 +34,7 @@
     "koa-router": "^7.4.0",
     "npm": "^6.10.1",
     "oauth-1.0a": "^2.2.6",
+    "request": "^2.88.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "typescript": "^3.5.3"
