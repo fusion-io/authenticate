@@ -1,6 +1,4 @@
 const jwt             = require('jsonwebtoken');
-const util            = require('util');
-const verifyJWT       = util.promisify(jwt.verify);
 
 const {
     UnAuthenticated,
@@ -22,7 +20,7 @@ class JWTIdentityProvider {
 
     async provide({token}) {
         try {
-            const payload = await verifyJWT(token, this.privateKey);
+            const payload = await jwt.verify(token, this.privateKey);
             return {token, payload};
         } catch (e) {
             throw new UnAuthenticated(`JWT Signature invalid. Reason: ${e}`);
