@@ -1,6 +1,6 @@
 {
   "name": "@fusion.io/authenticate",
-  "version": "2.0.0",
+  "version": "2.0.0-rc1",
   "description": "Better Authentication for better Geeks.",
   "repository": "https://github.com/fusion-io/authenticate",
   "main": "index.js",
